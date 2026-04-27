@@ -14,7 +14,6 @@ The goal is not to remove useful detail. The goal is to keep each activation pat
 
 | Skill | Lines | Suggested split | Rationale |
 |---|---:|---|---|
-| `Utilities/n8n/n8n-mcp-tools-expert/SKILL.md` | 877 | Keep tool-selection rules in `SKILL.md`. Move MCP tool catalog, parameter formats, template operations, credential operations, and workflow-management examples into direct references. | n8n MCP work is broad. Most requests need one tool family, not the entire catalog. |
 | `Utilities/n8n/n8n-node-configuration/SKILL.md` | 835 | Keep the node-configuration decision tree in `SKILL.md`. Move operation-specific field rules, display-option behavior, node examples, and patch-vs-full-update guidance into references. | Node configuration is highly conditional. Loading all operation examples up front is expensive. |
 | `Utilities/n8n/n8n-code-javascript/SKILL.md` | 784 | Keep Code node mode selection and critical syntax rules in `SKILL.md`. Move item access, HTTP helper patterns, date handling, paired-item behavior, batching, and error recipes into references. | JavaScript Code node tasks vary widely; most require one or two pattern files. |
 | `Utilities/n8n/n8n-code-python/SKILL.md` | 774 | Keep the “use Python only when appropriate” rule and mode selection in `SKILL.md`. Move standard-library notes, data access examples, limitations, and error patterns into references. | Python is a narrower path; the full body should not load unless Python is actually requested. |
@@ -35,6 +34,7 @@ The goal is not to remove useful detail. The goal is to keep each activation pat
 | Skill | Before | After | Notes |
 |---|---:|---:|---|
 | `graphify/SKILL.md` | 1329 lines | 72 lines | Converted into a router with direct root-level references for setup/detection, extraction, graph outputs, incremental operations, query operations, automation operations, and honesty rules. |
+| `Utilities/n8n/n8n-mcp-tools-expert/SKILL.md` | 877 lines | 64 lines | Converted into a router with direct references for tool selection, node type formats, common mistakes, usage patterns, templates/data/credentials/security, self-help/reference, and best practices. |
 
 ## Acceptance Criteria
 
