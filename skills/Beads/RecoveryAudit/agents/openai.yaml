@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Recovery Audit"
+  short_description: "Audit and rehearse Beads backup, sync, and recovery"
+  default_prompt: "Use $beads-recovery-audit to audit this repo's recovery posture and produce a concrete pass or fail report for backup, sync, lock cleanup, and drills."

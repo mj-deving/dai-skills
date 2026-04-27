@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Topology Planner"
+  short_description: "Choose the right Beads collaboration topology"
+  default_prompt: "Use $beads-topology-planner to recommend the smallest Beads collaboration topology that fits this team shape and explain the tradeoffs."

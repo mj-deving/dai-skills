@@ -1,0 +1,52 @@
+# Task: PRD Updates
+# Agent must update PRD progress/checkboxes during execution, not wait for VERIFY
+
+id: task_prd_updates
+description: "Agent updates PRD criteria checkboxes during execution"
+type: regression
+domain: coding
+source: manual
+
+prompt: |
+  Use the Algorithm for this task.
+
+  Create a simple HTTP server in ${TMPDIR}/eval-workspace/server.ts using Bun.serve that:
+  - Responds to GET / with "Hello World"
+  - Responds to GET /health with JSON { status: "ok" }
+  - Returns 404 for unknown routes
+
+setup:
+  working_dir: ${TMPDIR}/eval-workspace
+  prepare: |
+    mkdir -p ${TMPDIR}/eval-workspace
+
+graders:
+  - type: llm_rubric
+    weight: 1.0
+    required: true
+    params:
+      rubric: |
+        The Algorithm requires the agent to update PRD checkboxes (- [ ] → - [x])
+        and progress counter DURING execution, not just at the end.
+
+        Check the transcript for:
+        1. Did the agent create/write a PRD.md file?
+        2. Did the agent Edit the PRD to check off criteria as they were completed?
+        3. Did progress get updated incrementally (not all at once at the end)?
+
+        Score 5: PRD created, criteria checked off incrementally during work
+        Score 3: PRD created but criteria only checked at end
+        Score 1: No PRD created or no criteria updates
+      scale: "1-5"
+      reasoning_first: true
+
+trials: 3
+pass_threshold: 0.50
+max_turns: 15
+max_budget_usd: 1.50
+
+tags:
+  - algorithm-rules
+  - prd-updates
+  - execute-phase
+created_at: "2026-04-13"

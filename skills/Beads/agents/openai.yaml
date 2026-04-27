@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads"
+  short_description: "Route any Beads task to the right sub-skill"
+  default_prompt: "Use $beads to route this Beads task to the right repo, hook, topology, workflow, or recovery sub-skill."

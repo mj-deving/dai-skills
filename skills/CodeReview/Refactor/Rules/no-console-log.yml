@@ -1,0 +1,6 @@
+id: no-console-log
+language: typescript
+rule:
+  pattern: console.log($$$ARGS)
+message: "Remove console.log before committing — use a logger or console.error for hooks"
+severity: warning

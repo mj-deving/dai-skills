@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Evidence Triage"
+  short_description: "Convert logs and repros into evidence-first beads"
+  default_prompt: "Use $beads-evidence-triage to turn this failure evidence into a self-contained Beads task with facts, likely fix surface, and acceptance criteria."

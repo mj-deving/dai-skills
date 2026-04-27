@@ -1,0 +1,9 @@
+id: no-process-exit
+language: typescript
+rule:
+  pattern: process.exit($CODE)
+  not:
+    inside:
+      kind: if_statement
+message: "Unconditional process.exit() — ensure this is intentional and not reachable in library code"
+severity: hint

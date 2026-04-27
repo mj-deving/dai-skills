@@ -1,0 +1,57 @@
+# Task: Batch Consideration
+# Agent should use /batch or consider batching when 3+ files need similar changes
+
+id: task_batch_consideration
+description: "Agent considers /batch for multi-file rename task"
+type: regression
+domain: coding
+source: manual
+
+prompt: |
+  Update the import path from `@utils/old-helpers` to `@utils/new-helpers` in these 5 files:
+  ${TMPDIR}/eval-workspace/src/auth.ts
+  ${TMPDIR}/eval-workspace/src/api.ts
+  ${TMPDIR}/eval-workspace/src/dashboard.ts
+  ${TMPDIR}/eval-workspace/src/settings.ts
+  ${TMPDIR}/eval-workspace/src/profile.ts
+
+setup:
+  working_dir: ${TMPDIR}/eval-workspace
+  prepare: |
+    mkdir -p ${TMPDIR}/eval-workspace/src
+    for f in auth api dashboard settings profile; do
+      echo 'import { helper } from "@utils/old-helpers";' > ${TMPDIR}/eval-workspace/src/$f.ts
+      echo 'export function ${f}Handler() { return helper(); }' >> ${TMPDIR}/eval-workspace/src/$f.ts
+    done
+
+graders:
+  - type: tool_calls
+    weight: 0.60
+    required: false
+    params:
+      # Ideal: agent invokes Skill("batch")
+      required:
+        - tool: Skill
+          params:
+            skill: "batch*"
+  - type: llm_rubric
+    weight: 0.40
+    params:
+      rubric: |
+        Did the agent consider batching for this 5-file change?
+        Score 5: Used /batch skill or explicitly mentioned batching as the approach
+        Score 3: Edited files efficiently (parallel edits) but didn't use /batch
+        Score 1: Edited files one-by-one sequentially without mentioning batching
+      scale: "1-5"
+      reasoning_first: true
+
+trials: 3
+pass_threshold: 0.50
+max_turns: 8
+max_budget_usd: 1.00
+
+tags:
+  - algorithm-rules
+  - batch
+  - multi-file
+created_at: "2026-04-13"

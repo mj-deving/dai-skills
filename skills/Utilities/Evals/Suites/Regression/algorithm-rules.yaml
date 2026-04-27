@@ -1,0 +1,33 @@
+# Algorithm Rules — Regression Suite
+#
+# Tests whether Algorithm spec text actually changes agent behavior.
+# Unlike hook-enforcement (deterministic stdin→stdout), these run real
+# Claude sessions via `claude -p` and grade tool call patterns.
+#
+# COST WARNING: Each task runs 3 trials at $0.50-2.00 each.
+# Full suite: ~$20-40 per run. Don't run in CI.
+#
+# Usage:
+#   bun test skills/Utilities/Evals/Tests/algorithm-rules.test.ts          # full run
+#   bun test skills/Utilities/Evals/Tests/algorithm-rules.test.ts --dry-run  # validate YAMLs only
+#   EVAL_TASKS=task_run_tests_first bun test ...                           # single task
+
+name: algorithm-rules
+description: "Algorithm spec behavioral validation — do rules change agent behavior?"
+type: regression
+domain: coding
+
+tasks:
+  - task_batch_consideration
+  - task_run_tests_first
+  - task_tdd_default
+  - task_isc_count_gate
+  - task_capability_invocation
+  - task_simplify_in_verify
+  - task_prd_updates
+  - task_probe_before_commit
+
+pass_threshold: 0.60
+saturation_threshold: 0.90
+
+created_at: "2026-04-13"

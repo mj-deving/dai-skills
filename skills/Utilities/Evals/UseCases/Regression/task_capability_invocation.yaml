@@ -1,0 +1,47 @@
+# Task: Capability Invocation
+# Selected capabilities must actually be invoked via Skill() tool call — no phantom selections
+
+id: task_capability_invocation
+description: "Selected capabilities are invoked via tool calls, not just listed"
+type: regression
+domain: general
+source: manual
+
+prompt: |
+  Research the current best practices for WebSocket authentication in 2026.
+  Summarize the top 3 approaches with tradeoffs.
+
+setup:
+  working_dir: ${TMPDIR}/eval-workspace
+  prepare: |
+    mkdir -p ${TMPDIR}/eval-workspace
+
+graders:
+  - type: llm_rubric
+    weight: 1.0
+    required: true
+    params:
+      rubric: |
+        The Algorithm requires every selected capability to be invoked via Skill() tool call.
+
+        Check the transcript for:
+        1. Did the agent list "CAPABILITIES SELECTED" with specific skills?
+        2. For EACH capability listed, was there a corresponding Skill() tool call?
+        3. Were there any phantom selections (listed but never called)?
+
+        Score 5: All selected capabilities were invoked via Skill() tool call
+        Score 3: Most were invoked but 1-2 phantom selections
+        Score 1: Multiple phantom selections or no capability selection at all
+      scale: "1-5"
+      reasoning_first: true
+
+trials: 3
+pass_threshold: 0.60
+max_turns: 15
+max_budget_usd: 2.00
+
+tags:
+  - algorithm-rules
+  - capability-invocation
+  - observe-phase
+created_at: "2026-04-13"

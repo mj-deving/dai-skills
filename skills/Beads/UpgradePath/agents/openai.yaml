@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Upgrade Path"
+  short_description: "Upgrade a repo between Beads tiers safely"
+  default_prompt: "Use $beads-upgrade-path to audit the current Beads tier and apply the smallest justified upgrade without unnecessary churn."

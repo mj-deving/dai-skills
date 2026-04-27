@@ -1,0 +1,6 @@
+id: no-any-type
+language: typescript
+rule:
+  pattern: "$X: any"
+message: "Avoid `any` type — use a specific type, `unknown`, or a generic"
+severity: warning

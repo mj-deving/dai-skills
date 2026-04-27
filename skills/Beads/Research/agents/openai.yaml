@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Research"
+  short_description: "Research real Beads docs, drift, and senior usage"
+  default_prompt: "Use $beads-research to research current Beads best practices from primary sources and separate current guidance from mixed-era drift."

@@ -1,0 +1,1029 @@
+{
+  "ok": true,
+  "skill_count": 132,
+  "category_count": 21,
+  "errors": [],
+  "warnings": [
+    {
+      "path": "Security/Recon/SKILL.md",
+      "kind": "large_skill",
+      "lines": 514
+    },
+    {
+      "path": "Utilities/Documents/Pptx/SKILL.md",
+      "kind": "large_skill",
+      "lines": 585
+    },
+    {
+      "path": "Utilities/n8n/n8n-code-javascript/SKILL.md",
+      "kind": "large_skill",
+      "lines": 784
+    },
+    {
+      "path": "Utilities/n8n/n8n-code-python/SKILL.md",
+      "kind": "large_skill",
+      "lines": 774
+    },
+    {
+      "path": "Utilities/n8n/n8n-expression-syntax/SKILL.md",
+      "kind": "large_skill",
+      "lines": 525
+    },
+    {
+      "path": "Utilities/n8n/n8n-mcp-tools-expert/SKILL.md",
+      "kind": "large_skill",
+      "lines": 877
+    },
+    {
+      "path": "Utilities/n8n/n8n-node-configuration/SKILL.md",
+      "kind": "large_skill",
+      "lines": 835
+    },
+    {
+      "path": "Utilities/n8n/n8n-validation-expert/SKILL.md",
+      "kind": "large_skill",
+      "lines": 761
+    },
+    {
+      "path": "Utilities/n8n/n8n-workflow-patterns/SKILL.md",
+      "kind": "large_skill",
+      "lines": 512
+    },
+    {
+      "path": "graphify/SKILL.md",
+      "kind": "large_skill",
+      "lines": 1329
+    }
+  ],
+  "missing_relative_links": [],
+  "local_path_references": [],
+  "secret_pattern_hits": [],
+  "categories": {
+    "Agents": [
+      {
+        "path": "Agents",
+        "name": "Agents",
+        "description": "Compose CUSTOM agents from Base Traits + Voice + Specialization for specialized perspectives. USE WHEN create custom agents, spin up agents, specialized agents, agent personalities, available traits, list traits, agent voices, compose agent, load agent context, agent profile, spawn parallel agents, launch agents. NOT for agent teams/swarms (use Delegation skill \u2192 TeamCreate) or Codex delegation (use Delegation skill \u2192 CodexBridge).",
+        "lines": 297,
+        "category": "Agents"
+      }
+    ],
+    "Beads": [
+      {
+        "path": "Beads",
+        "name": "beads",
+        "description": "Beads operating system for repo and machine workflow. USE WHEN Beads, beads bootstrap, beads upgrade, beads hooks, beads topology, beads formulas, beads recovery, beads research, or making Beads foolproof across sessions and repos.",
+        "lines": 139,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/Bootstrap",
+        "name": "beads-bootstrap",
+        "description": "Audit or initialize repo Beads workflow and files. USE WHEN bootstrap Beads, adopt Beads, standardize Beads workflow, initialize a new repo onto Beads, or verify whether a repo already has mature Beads doctrine.",
+        "lines": 244,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/EvidenceTriage",
+        "name": "beads-evidence-triage",
+        "description": "Turn raw failures into high-signal beads. USE WHEN logs, repro commands, or observed behavior need to become self-contained evidence-first tasks instead of vague TODOs.",
+        "lines": 36,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/FormulaBuilder",
+        "name": "beads-formula-builder",
+        "description": "Build repeatable Beads formulas and workflow packs. USE WHEN recurring operational work should become dependency-aware templates with gates, examples, and dry-run validation.",
+        "lines": 36,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/HookAudit",
+        "name": "beads-hook-audit",
+        "description": "Audit and repair Claude-side Beads hook behavior on the local machine. USE WHEN Beads hooks, SessionStart, PreCompact, Stop, PostToolUse, hook doctrine, auto-close risk, or machine-level Beads alignment.",
+        "lines": 105,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/RecoveryAudit",
+        "name": "beads-recovery-audit",
+        "description": "Rehearse Beads recovery and drift handling. USE WHEN backup, restore, pull or push, lock cleanup, or mode-transition safety should be audited before trusting Beads operationally.",
+        "lines": 38,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/Research",
+        "name": "beads-research",
+        "description": "Research Beads best practices from primary sources. USE WHEN real Beads documentation, senior-user workflow patterns, architecture drift analysis, or source-grounded Beads doctrine and recommendations are needed.",
+        "lines": 43,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/TopologyPlanner",
+        "name": "beads-topology-planner",
+        "description": "Choose the right Beads collaboration topology. USE WHEN deciding between embedded single-clone, shared-remote clones, per-clone remotes, or server mode for concurrent writers.",
+        "lines": 37,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/UpgradePath",
+        "name": "beads-upgrade-path",
+        "description": "Audit and safely upgrade a repo's Beads operating tier. USE WHEN evolve Beads workflow, move T1 to T2, move T2 to T3, add multi-agent coordination, add routing or orchestration, or confirm that no upgrade is justified.",
+        "lines": 131,
+        "category": "Beads"
+      },
+      {
+        "path": "Beads/VersionAudit",
+        "name": "beads-version-audit",
+        "description": "Audit a repo's live Beads posture before migration or coordination work. USE WHEN verify backend mode, remotes, hooks, legacy drift, or whether a repo is safe to upgrade, share, or recover.",
+        "lines": 50,
+        "category": "Beads"
+      }
+    ],
+    "CodeReview": [
+      {
+        "path": "CodeReview",
+        "name": "CodeReview",
+        "description": "Structured code review methodology \u2014 5-axis evaluation, severity classification, named simplification patterns. USE WHEN code review, review code, review PR, review changes, review diff, review this, quality review, review before merge, review my code, pull request review, change review, shellcheck, shell lint, bash lint, script analysis.",
+        "lines": 164,
+        "category": "CodeReview"
+      },
+      {
+        "path": "CodeReview/Desloppify",
+        "name": "Desloppify",
+        "description": "Multi-language codebase health scanner \u2014 technical debt scoring and cleanup plans. USE WHEN desloppify, health scan, technical debt, health score, cleanup plan, debt audit, code health.",
+        "lines": 328,
+        "category": "CodeReview"
+      },
+      {
+        "path": "CodeReview/Refactor",
+        "name": "Refactor",
+        "description": "Lightweight batch refactoring using jscpd, knip, eslint, ast-grep. USE WHEN refactor, scan for duplication, find dead code, unused exports, cleanup session, refactoring pass.",
+        "lines": 41,
+        "category": "CodeReview"
+      }
+    ],
+    "ContentAnalysis": [
+      {
+        "path": "ContentAnalysis",
+        "name": "ContentAnalysis",
+        "description": "Content extraction and analysis \u2014 wisdom extraction, summarization, web scraping, transcription, slide extraction, YouTube to ebook, and AI builders digest. USE WHEN extract wisdom, content analysis, summarize URL, extract transcript, YouTube transcript, batch summarize, scrape website, newspaper4k, youtube to ebook, channel digest, AI builders digest, follow builders.",
+        "lines": 61,
+        "category": "ContentAnalysis"
+      },
+      {
+        "path": "ContentAnalysis/ExtractWisdom",
+        "name": "ExtractWisdom",
+        "description": "Content-adaptive wisdom extraction \u2014 detects what domains exist in content and builds custom sections (not static IDEAS/QUOTES). Produces tailored insight reports from videos, podcasts, articles. USE WHEN extract wisdom, analyze video, analyze podcast, extract insights, what's interesting, extract from YouTube, what did I miss, key takeaways.",
+        "lines": 229,
+        "category": "ContentAnalysis"
+      },
+      {
+        "path": "ContentAnalysis/FollowBuilders",
+        "name": "FollowBuilders",
+        "description": "AI builders digest \u2014 monitors top AI builders on X and YouTube podcasts, remixes content into digestible summaries. USE WHEN AI builders digest, AI industry insights, builder updates, /ai, follow builders, AI news digest, what are builders saying, AI trends from builders.",
+        "lines": 466,
+        "category": "ContentAnalysis"
+      },
+      {
+        "path": "ContentAnalysis/Summarize",
+        "name": "Summarize",
+        "description": "Universal content extraction, summarization, web scraping, and transcription via summarize CLI (v0.11.1). USE WHEN summarize URL, extract transcript, YouTube transcript, summarize video, summarize article, batch summarize, extract slides, transcribe audio, summarize webpage, scrape website, extract markdown, web extraction, content extraction, scrape URL, podcast transcript, audio to text, video slides, OCR slides, extract content from URL.",
+        "lines": 60,
+        "category": "ContentAnalysis"
+      },
+      {
+        "path": "ContentAnalysis/YouTubeToEbook",
+        "name": "youtube-to-ebook",
+        "description": "Transform YouTube videos into beautifully formatted ebook articles with transcripts",
+        "lines": 171,
+        "category": "ContentAnalysis"
+      }
+    ],
+    "Data": [
+      {
+        "path": "Data",
+        "name": "Data",
+        "description": "Structured data processing and economic metrics \u2014 DuckDB SQL, miller, xsv, gron, jq/yq for local files plus 68 US economic indicators from FRED, EIA, Treasury, BLS. USE WHEN data processing, CSV, JSON, parquet, SQL query, DuckDB, miller, xsv, aggregate, filter data, data analysis, GDP, inflation, unemployment, economic metrics, FRED, economic overview, US metrics.",
+        "lines": 38,
+        "category": "Data"
+      },
+      {
+        "path": "Data/DataProcessing",
+        "name": "DataProcessing",
+        "description": "CLI-first structured data processing \u2014 DuckDB SQL on local files, miller record transforms, xsv CSV operations, gron JSON flattening, jq/yq native patterns. USE WHEN data processing, CSV, JSON, parquet, SQL query, data transform, structured data, DuckDB, miller, xsv, aggregate, filter data, convert format, data analysis, query CSV, join files, column stats, flatten JSON, greppable JSON, format conversion, TSV, record transform, data pipeline.",
+        "lines": 124,
+        "category": "Data"
+      },
+      {
+        "path": "Data/USMetrics",
+        "name": "USMetrics",
+        "description": "68 US economic indicators from FRED, EIA, Treasury, BLS, Census APIs with trend analysis and cross-metric correlation. Updates Substrate dataset, produces economic overviews. USE WHEN GDP, inflation, unemployment, economic metrics, gas prices, how is the economy, update data, refresh data, get current state, economic overview, FRED, fetch FRED series, generate analysis, update substrate metrics, US metrics, economic trends.",
+        "lines": 171,
+        "category": "Data"
+      }
+    ],
+    "Documentation": [
+      {
+        "path": "Documentation/CodebaseToCourse",
+        "name": "CodebaseToCourse",
+        "description": "Turn any codebase into interactive HTML courses for non-technical people. USE WHEN codebase to course, interactive tutorial, teach code, code walkthrough, learn from codebase, explain codebase interactively.",
+        "lines": 221,
+        "category": "Documentation"
+      },
+      {
+        "path": "Documentation",
+        "name": "Documentation",
+        "description": "Documentation practices \u2014 comment guidelines, ADR conventions, API documentation, inline docs philosophy, doc health scanning and maintenance. USE WHEN documentation, write docs, comment guidelines, ADR, architecture decision, API docs, JSDoc, OpenAPI, document code, when to comment, how to document, self-documenting code, README, doc health, doc drift, stale docs, fix docs, doc maintenance, check docs.",
+        "lines": 140,
+        "category": "Documentation"
+      }
+    ],
+    "Frontend": [
+      {
+        "path": "Frontend",
+        "name": "Frontend",
+        "description": "Frontend design and website engineering \u2014 standards, anti-slop rules, aesthetic presets, website factory, design intelligence, audit commands, and site teardown. USE WHEN building UI, HTML, frontend, design review, responsive, website factory, portfolio site, landing page, impeccable, audit, typeset, animate, colorize, critique, layout, polish, delight, harden, site teardown, clone website, redesign.",
+        "lines": 111,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/FrontendDesign",
+        "name": "FrontendDesign",
+        "description": "Frontend UI engineering and aesthetic standards \u2014 design thinking, anti-AI-slop rules, component architecture, responsive design, accessibility, and design review. Incorporates official Anthropic frontend-design skill aesthetics. USE WHEN building UI, generating HTML, frontend work, design review, component architecture, responsive design, anti-slop, design system, WCAG, accessibility review, build web component, build page, build application.",
+        "lines": 184,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/UIUXProMax",
+        "name": "UIUXProMax",
+        "description": "Data-driven UI/UX design intelligence \u2014 67 styles, 161 palettes, 57 font pairings, 25 chart types, 99 UX guidelines across 16 tech stacks. Python search tool for context-aware design recommendations. USE WHEN design system, color palette, font pairing, style selection, UX guidelines, chart design, design review, UI audit, landing page design, dashboard design, SaaS design, glassmorphism, claymorphism, brutalism, neumorphism, bento grid, dark mode, responsive design, product type design, design intelligence, pro max.",
+        "lines": 74,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/WebsiteFactory",
+        "name": "WebsiteFactory",
+        "description": "Professional website creation workflow \u2014 Claude Code + Taste Skill + AI-generated 3D assets (Nano Banana, Seedance, Kling) + Netlify deploy. USE WHEN build website, create website, website factory, portfolio site, landing page, deploy site, taste skill, website with video, animated website, hero video, frontend factory, high-end website, website design.",
+        "lines": 90,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/a11y-deep",
+        "name": "a11y-deep",
+        "description": "Deep WCAG 2.2 AA accessibility audit using specialist agents. Use for public-facing pages, portfolio deploys, or when Impeccable/audit flags a11y issues. Slower than /audit but catches everything.",
+        "lines": 107,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/adapt",
+        "name": "adapt",
+        "description": "Adapt designs to work across different screen sizes, devices, contexts, or platforms. Implements breakpoints, fluid layouts, and touch targets. Use when the user mentions responsive design, mobile layouts, breakpoints, viewport adaptation, or cross-device compatibility.",
+        "lines": 199,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/animate",
+        "name": "animate",
+        "description": "Review a feature and enhance it with purposeful animations, micro-interactions, and motion effects that improve usability and delight. Use when the user mentions adding animation, transitions, micro-interactions, motion design, hover effects, or making the UI feel more alive.",
+        "lines": 175,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/audit",
+        "name": "audit",
+        "description": "Run technical quality checks across accessibility, performance, theming, responsive design, and anti-patterns. Generates a scored report with P0-P3 severity ratings and actionable plan. Use when the user wants an accessibility check, performance audit, or technical quality review.",
+        "lines": 148,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/bolder",
+        "name": "bolder",
+        "description": "Amplify safe or boring designs to make them more visually interesting and stimulating. Increases impact while maintaining usability. Use when the user says the design looks bland, generic, too safe, lacks personality, or wants more visual impact and character.",
+        "lines": 117,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Aesthetics/brand-references",
+        "name": "brand-references",
+        "description": "76 brand design systems as DESIGN.md references \u2014 7 bundled locally (Apple, Claude, Cursor, Figma, Spotify, Stripe, Vercel), 69+ fetchable on demand from getdesign.md. Use as starting point for design inspiration, then customize. USE WHEN brand design, design like stripe, design like apple, design inspiration, brand reference, design system reference, getdesign, design.md, start from brand, copy brand style, look like vercel, build like spotify, design reference.",
+        "lines": 101,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/clarify",
+        "name": "clarify",
+        "description": "Improve unclear UX copy, error messages, microcopy, labels, and instructions to make interfaces easier to understand. Use when the user mentions confusing text, unclear labels, bad error messages, hard-to-follow instructions, or wanting better UX writing.",
+        "lines": 183,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/colorize",
+        "name": "colorize",
+        "description": "Add strategic color to features that are too monochromatic or lack visual interest, making interfaces more engaging and expressive. Use when the user mentions the design looking gray, dull, lacking warmth, needing more color, or wanting a more vibrant or expressive palette.",
+        "lines": 143,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/critique",
+        "name": "critique",
+        "description": "Evaluate design from a UX perspective, assessing visual hierarchy, information architecture, emotional resonance, cognitive load, and overall quality with quantitative scoring, persona-based testing, automated anti-pattern detection, and actionable feedback. Use when the user asks to review, critique, evaluate, or give feedback on a design or component.",
+        "lines": 227,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/delight",
+        "name": "delight",
+        "description": "Add moments of joy, personality, and unexpected touches that make interfaces memorable and enjoyable to use. Elevates functional to delightful. Use when the user asks to add polish, personality, animations, micro-interactions, delight, or make an interface feel fun or memorable.",
+        "lines": 304,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Aesthetics/taste-skill",
+        "name": "design-taste-frontend",
+        "description": "Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. Enforces metric-based rules, strict component architecture, CSS hardware acceleration, and balanced design engineering.",
+        "lines": 226,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/distill",
+        "name": "distill",
+        "description": "Strip designs to their essence by removing unnecessary complexity. Great design is simple, powerful, and clean. Use when the user asks to simplify, declutter, reduce noise, remove elements, or make a UI cleaner and more focused.",
+        "lines": 122,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/frontend-slides",
+        "name": "frontend-slides",
+        "description": "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstract choices.",
+        "lines": 322,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/harden",
+        "name": "harden",
+        "description": "Make interfaces production-ready: error handling, empty states, onboarding flows, i18n, text overflow, and edge case management. Use when the user asks to harden, make production-ready, handle edge cases, add error states, design empty states, improve onboarding, or fix overflow and i18n issues.",
+        "lines": 389,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Aesthetics/soft-skill",
+        "name": "high-end-visual-design",
+        "description": "Teaches the AI to design like a high-end agency. Defines the exact fonts, spacing, shadows, card structures, and animations that make a website feel expensive. Blocks all the common defaults that make AI designs look cheap or generic.",
+        "lines": 98,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/impeccable",
+        "name": "impeccable",
+        "description": "Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics. Use when the user asks to build web components, pages, artifacts, posters, or applications, or when any design skill requires project context. Call with 'craft' for shape-then-build, 'teach' for design context setup, or 'extract' to pull reusable components and tokens into the design system.",
+        "lines": 365,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Aesthetics/brutalist-skill",
+        "name": "industrial-brutalist-ui",
+        "description": "Raw mechanical interfaces fusing Swiss typographic print with military terminal aesthetics. Rigid grids, extreme type scale contrast, utilitarian color, analog degradation effects. For data-heavy dashboards, portfolios, or editorial sites that need to feel like declassified blueprints.",
+        "lines": 92,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/layout",
+        "name": "layout",
+        "description": "Improve layout, spacing, and visual rhythm. Fixes monotonous grids, inconsistent spacing, and weak visual hierarchy. Use when the user mentions layout feeling off, spacing issues, visual hierarchy, crowded UI, alignment problems, or wanting better composition.",
+        "lines": 125,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Aesthetics/minimalist-skill",
+        "name": "minimalist-ui",
+        "description": "Clean editorial-style interfaces. Warm monochrome palette, typographic contrast, flat bento grids, muted pastels. No gradients, no heavy shadows.",
+        "lines": 85,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/optimize",
+        "name": "optimize",
+        "description": "Diagnoses and fixes UI performance across loading speed, rendering, animations, images, and bundle size. Use when the user mentions slow, laggy, janky, performance, bundle size, load time, or wants a faster, smoother experience.",
+        "lines": 266,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/overdrive",
+        "name": "overdrive",
+        "description": "Pushes interfaces past conventional limits with technically ambitious implementations \u2014 shaders, spring physics, scroll-driven reveals, 60fps animations. Use when the user wants to wow, impress, go all-out, or make something that feels extraordinary.",
+        "lines": 142,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/polish",
+        "name": "polish",
+        "description": "Performs a final quality pass fixing alignment, spacing, consistency, and micro-detail issues before shipping. Use when the user mentions polish, finishing touches, pre-launch review, something looks off, or wants to go from good to great.",
+        "lines": 224,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/quieter",
+        "name": "quieter",
+        "description": "Tones down visually aggressive or overstimulating designs, reducing intensity while preserving quality. Use when the user mentions too bold, too loud, overwhelming, aggressive, garish, or wants a calmer, more refined aesthetic.",
+        "lines": 103,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Aesthetics/redesign-skill",
+        "name": "redesign-existing-projects",
+        "description": "Upgrades existing websites and apps to premium quality. Audits current design, identifies generic AI patterns, and applies high-end design standards without breaking functionality. Works with any CSS framework or vanilla CSS.",
+        "lines": 178,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/shape",
+        "name": "shape",
+        "description": "Plan the UX and UI for a feature before writing code. Runs a structured discovery interview, then produces a design brief that guides implementation. Use during the planning phase to establish design direction, constraints, and strategy before any code is written.",
+        "lines": 96,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Aesthetics/stitch-skill",
+        "name": "stitch-design-taste",
+        "description": "Semantic Design System Skill for Google Stitch. Generates agent-friendly DESIGN.md files that enforce premium, anti-generic UI standards \u2014 strict typography, calibrated color, asymmetric layouts, perpetual micro-motion, and hardware-accelerated performance.",
+        "lines": 184,
+        "category": "Frontend"
+      },
+      {
+        "path": "Frontend/Impeccable/typeset",
+        "name": "typeset",
+        "description": "Improves typography by fixing font choices, hierarchy, sizing, weight, and readability so text feels intentional. Use when the user mentions fonts, type, readability, text hierarchy, sizing looks off, or wants more polished, intentional typography.",
+        "lines": 116,
+        "category": "Frontend"
+      }
+    ],
+    "GitWorkflow": [
+      {
+        "path": "GitWorkflow/DeployChecklist",
+        "name": "DeployChecklist",
+        "description": "Pre-deployment verification checklists customized to your stack. USE WHEN deploy checklist, pre-deploy, ready to ship, deploy verification, release checklist, go-no-go, deploy readiness, before deploying, ship it, production deploy, rollback plan, sops, secrets check, encrypted config, pre-deploy secrets.",
+        "lines": 87,
+        "category": "GitWorkflow"
+      },
+      {
+        "path": "GitWorkflow",
+        "name": "GitWorkflow",
+        "description": "Git workflow and versioning \u2014 atomic commits, save point pattern, worktrees for parallel agents, commit conventions, change summaries. USE WHEN git workflow, commit strategy, branching, git conventions, commit message, worktree, parallel work, save point, git bisect, version control, how to commit, when to commit, split commits, act, local actions, test workflow, git-cliff, changelog, release notes.",
+        "lines": 226,
+        "category": "GitWorkflow"
+      }
+    ],
+    "Investigation": [
+      {
+        "path": "Investigation",
+        "name": "Investigation",
+        "description": "OSINT and people-finding \u2014 structured investigations, company intel, due diligence, and ethical people search. USE WHEN OSINT, due diligence, company intel, background check, find person, people search, public records, reverse lookup, social media search, domain lookup.",
+        "lines": 21,
+        "category": "Investigation"
+      },
+      {
+        "path": "Investigation/OSINT",
+        "name": "OSINT",
+        "description": "Structured OSINT investigations \u2014 people lookup, company intel, investment due diligence, entity/threat intel, domain recon, organization research using public sources with ethical authorization framework. USE WHEN OSINT, due diligence, background check, research person, company intel, investigate, company lookup, domain lookup, entity lookup, organization lookup, threat intel, discover OSINT sources.",
+        "lines": 163,
+        "category": "Investigation"
+      },
+      {
+        "path": "Investigation/PrivateInvestigator",
+        "name": "PrivateInvestigator",
+        "description": "Ethical people-finding using 15 parallel research agents (45 search threads) across public records, social media, reverse lookups. Public data only, no pretexting. USE WHEN find person, locate, reconnect, people search, skip trace, reverse lookup, social media search, public records search, verify identity.",
+        "lines": 227,
+        "category": "Investigation"
+      }
+    ],
+    "Media": [
+      {
+        "path": "Media/Art",
+        "name": "Art",
+        "description": "Generate illustrations, technical diagrams, mermaid flowcharts, infographics, header images, thumbnails, comics, flyers, posters, and PAI pack icons using multiple rendering backends. USE WHEN art, header images, visualizations, mermaid, flowchart, technical diagram, infographic, PAI icon, pack icon, YouTube thumbnails, ad hoc thumbnails, annotated screenshots, aphorisms, comics, comparisons, D3 dashboards, embossed logo wallpaper, essay illustration, frameworks, maps, recipe cards, remove background, stats, taxonomies, timelines, brand wallpaper, visualize, generate image, Midjourney, compose thumbnail, generate prompt, flyer, poster, print, handout, postcard.",
+        "lines": 233,
+        "category": "Media"
+      },
+      {
+        "path": "Media",
+        "name": "Media",
+        "description": "Visual and video content \u2014 illustrations, diagrams, mermaid, infographics, header images, thumbnails, comics, and programmatic video via Remotion. USE WHEN art, diagrams, mermaid, infographics, video, animation, Remotion, thumbnails, comics, generate image, Midjourney, remove background.",
+        "lines": 21,
+        "category": "Media"
+      },
+      {
+        "path": "Media/Remotion",
+        "name": "Remotion",
+        "description": "Programmatic video creation with React via Remotion \u2014 compositions, animations, motion graphics, rendered to MP4. USE WHEN video, animation, motion graphics, video rendering, React video, intro video, YouTube video, TikTok video, video production, render video, content to animation, animate content, video overlay.",
+        "lines": 70,
+        "category": "Media"
+      }
+    ],
+    "ProjectTelos": [
+      {
+        "path": "ProjectTelos",
+        "name": "project-telos",
+        "description": "Project-only Telos context mapping for goals, constraints, stakeholders, decisions, dependencies, risks, and narrative reports. Use when analyzing a project, building a project context pack, mapping dependencies, writing an executive project brief, or creating a non-personal project dashboard/report.",
+        "lines": 58,
+        "category": "ProjectTelos"
+      }
+    ],
+    "Research": [
+      {
+        "path": "Research",
+        "name": "research",
+        "description": "Source-grounded research workflow for current facts, technical topics, market scans, literature reviews, and evidence-backed recommendations. Use when the user asks to research, investigate, compare sources, verify claims, summarize a topic from sources, or produce a cited briefing.",
+        "lines": 52,
+        "category": "Research"
+      }
+    ],
+    "ScientificDeck": [
+      {
+        "path": "ScientificDeck",
+        "name": "ScientificDeck",
+        "description": "Scientific presentation generation \u2014 LaTeX Beamer decks and self-contained HTML slide decks using Scott Cunningham's Rhetoric of Decks framework. USE WHEN scientific presentation, beamer deck, academic slides, scientific slides, compile deck, latex presentation, html deck, scientific html slides, academic presentation, rhetoric of decks, compile tex, new research project.",
+        "lines": 67,
+        "category": "ScientificDeck"
+      }
+    ],
+    "Scraping": [
+      {
+        "path": "Scraping/Apify",
+        "name": "Apify",
+        "description": "Social media scraping, business data, e-commerce via Apify actors \u2014 with auto-update workflow for actor catalog. USE WHEN Twitter, Instagram, LinkedIn, TikTok, YouTube, Facebook, Google Maps, Amazon scraping, Apify, update Apify actors, social media scraping, lead generation, web scraper.",
+        "lines": 481,
+        "category": "Scraping"
+      },
+      {
+        "path": "Scraping/BrightData",
+        "name": "BrightData",
+        "description": "4-tier progressive URL scraping and multi-page crawling \u2014 WebFetch, then Chrome-header curl, then Playwright browser, then Bright Data proxy. Auto-escalates when lower tiers fail. USE WHEN Bright Data, scrape URL, web scraping, site blocking me, can't access, bot detection, crawl site, crawl pages, spider, CAPTCHA, four tier scrape, progressive scraping, Chrome headers.",
+        "lines": 204,
+        "category": "Scraping"
+      },
+      {
+        "path": "Scraping/Crawl4AI",
+        "name": "Crawl4AI",
+        "description": "Free open-source multi-page website crawler \u2014 self-hosted Python crawler that outputs LLM-ready Markdown with JS rendering. USE WHEN crawl website free, crawl site, crawl pages free, free crawler, open source crawler, crawl4ai, crawl without cost, self-hosted crawl, map website, extract all pages.",
+        "lines": 44,
+        "category": "Scraping"
+      },
+      {
+        "path": "Scraping/JinaReader",
+        "name": "JinaReader",
+        "description": "Free zero-setup web scraping via Jina Reader API \u2014 converts any URL to clean Markdown with JS rendering, no API key needed. USE WHEN jina reader, free scrape, quick scrape, extract webpage free, scrape without key, simple scrape, lightweight scrape, get page content.",
+        "lines": 40,
+        "category": "Scraping"
+      },
+      {
+        "path": "Scraping",
+        "name": "Scraping",
+        "description": "Web scraping via progressive escalation \u2014 Jina Reader, Crawl4AI, Spider.cloud, Bright Data, Apify actors, bird CLI for X/Twitter, discrawl for Discord, Katana URL discovery. USE WHEN scraping, crawl, scrape URL, Twitter scraping, Apify, bot detection, jina reader, crawl4ai, spider cloud, katana, URL discovery, bird, read tweet, search X, Discord search, Discord history, Discord messages, Discord members, Discord archive, discrawl.",
+        "lines": 91,
+        "category": "Scraping"
+      },
+      {
+        "path": "Scraping/Spider",
+        "name": "Spider",
+        "description": "Low-cost high-scale web scraping and crawling via Spider.cloud API \u2014 Rust-based, fast, ~$0.48/1K pages. USE WHEN spider cloud, scale scraping, bulk scrape, bulk crawl, high volume scraping, scrape at scale, affordable crawling, spider.cloud.",
+        "lines": 48,
+        "category": "Scraping"
+      },
+      {
+        "path": "Scraping/Bird",
+        "name": "bird",
+        "description": "X/Twitter CLI for reading, searching, and posting via browser cookies. USE WHEN read tweet, search X, search Twitter, post tweet, reply tweet, X timeline, Twitter mentions, trending topics, user tweets, bird.",
+        "lines": 47,
+        "category": "Scraping"
+      },
+      {
+        "path": "Scraping/Discord",
+        "name": "discrawl",
+        "description": "Discord guild archiving and search via discrawl CLI. USE WHEN Discord search, Discord history, Discord messages, Discord members, Discord channels, search Discord, Discord archive, Discord mentions, Discord server, Discord guild, discrawl.",
+        "lines": 124,
+        "category": "Scraping"
+      }
+    ],
+    "Security": [
+      {
+        "path": "Security/AnnualReports",
+        "name": "AnnualReports",
+        "description": "Aggregate and analyze annual security reports from major vendors \u2014 extract trends, compare threat landscapes year-over-year, produce synthesized threat intelligence summaries. Fetch, list, and update report sources. USE WHEN annual reports, security reports, threat reports, industry reports, vendor reports, threat landscape, fetch report, list sources, update sources.",
+        "lines": 117,
+        "category": "Security"
+      },
+      {
+        "path": "Security/PromptInjection",
+        "name": "PromptInjection",
+        "description": "Test LLM applications for prompt injection vulnerabilities \u2014 jailbreak attempts, system prompt extraction, context manipulation, guardrail bypass techniques, direct injection, indirect injection, multi-stage attacks, and reconnaissance. USE WHEN prompt injection, jailbreak, LLM security, AI security assessment, pentest AI application, test chatbot, guardrail bypass, direct injection, indirect injection, RAG poisoning, multi-stage attack, complete assessment, reconnaissance.",
+        "lines": 268,
+        "category": "Security"
+      },
+      {
+        "path": "Security/Recon",
+        "name": "Recon",
+        "description": "Network reconnaissance \u2014 subdomain enumeration, port scanning, DNS/WHOIS/ASN lookups, endpoint discovery from JS, mass scanning, path discovery, CIDR/netblock analysis. Passive and active modes with corporate structure mapping and bounty program tracking. USE WHEN recon, reconnaissance, bug bounty, bounty programs, attack surface, subdomains, subdomain enumeration, port scan, mass scan, DNS, WHOIS, ASN, CIDR, netblock, IP recon, domain recon, passive recon, corporate structure, endpoint discovery, path discovery, scan results, analyze scan, update tools.",
+        "lines": 514,
+        "category": "Security"
+      },
+      {
+        "path": "Security/SECUpdates",
+        "name": "SECUpdates",
+        "description": "Security news from tldrsec, no.security, Krebs, Schneier, and other sources. USE WHEN security news, security updates, what's new in security, breaches, security research, sec updates, tldrsec, Krebs, Schneier.",
+        "lines": 280,
+        "category": "Security"
+      },
+      {
+        "path": "Security/SecureCoding",
+        "name": "SecureCoding",
+        "description": "Proactive secure coding \u2014 vulnerability patterns, bypass techniques, defense-in-depth for TypeScript and Cloudflare Workers. USE WHEN secure code, code security, vulnerability prevention, secure coding review, defense in depth, XSS prevention, SQL injection prevention, SSRF prevention, JWT security, access control patterns, API security patterns, secure design, security review code, prototype pollution.",
+        "lines": 128,
+        "category": "Security"
+      },
+      {
+        "path": "Security",
+        "name": "Security",
+        "description": "Security assessment \u2014 network recon, web app testing, prompt injection testing, security news, and vulnerability scanning. USE WHEN recon, port scan, subdomain, DNS, WHOIS, pentest, threat model, OWASP, prompt injection, LLM security, security news, trivy, CVE, vulnerability scan, sops, encrypt secrets.",
+        "lines": 84,
+        "category": "Security"
+      },
+      {
+        "path": "Security/WebAssessment",
+        "name": "WebAssessment",
+        "description": "Full web app security assessment \u2014 app understanding, threat modeling, OWASP testing, ffuf fuzzing, Playwright automation, AI-assisted vuln analysis. Coordinates with Recon and PromptInjection skills. USE WHEN web assessment, pentest, security testing, vulnerability scan, threat model app, understand application, create threat model, STRIDE, DREAD, PASTA, vulnerability analysis, Gemini analysis, ffuf, fuzzing, bug bounty, OSINT, browser automation, Playwright.",
+        "lines": 208,
+        "category": "Security"
+      }
+    ],
+    "TDD": [
+      {
+        "path": "TDD/APITesting",
+        "name": "APITesting",
+        "description": "Declarative API testing and HTTP probing \u2014 Hurl for multi-step API workflows with assertions, httpx for concurrent endpoint discovery. USE WHEN API testing, HTTP test, endpoint testing, Hurl, httpx, REST API, API validation, request chaining, batch URL, probe endpoints, API assertions, status code check, hurl file, test API, API smoke test, endpoint probe, bulk URL check, HTTP probing, API workflow test.",
+        "lines": 140,
+        "category": "TDD"
+      },
+      {
+        "path": "TDD",
+        "name": "TDD",
+        "description": "Test-driven development \u2014 RED/GREEN/REFACTOR cycle, Prove-It Pattern for bugs, test pyramid, coverage strategy. USE WHEN writing tests, TDD, test strategy, prove-it pattern, test pyramid, bug fix testing, test coverage, test-first, write tests, add tests, test plan, testing approach, regression test, coverage checklist.",
+        "lines": 129,
+        "category": "TDD"
+      }
+    ],
+    "Thinking": [
+      {
+        "path": "Thinking/BeCreative",
+        "name": "BeCreative",
+        "description": "Divergent ideation via Verbalized Sampling + extended thinking (1.6-2.1x diversity). USE WHEN be creative, deep thinking, brainstorm, divergent ideas, creative solutions, maximum creativity, tree of thoughts, idea generation, idea refine, refine idea, how might we, HMW, scope an idea, MVP scope, not-doing list, domain specific creativity, technical creativity, standard creativity.",
+        "lines": 126,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/ContextEngineering",
+        "name": "ContextEngineering",
+        "description": "Strategic context management for AI agents \u2014 5-level hierarchy, starvation/flooding diagnosis, brain dump structuring, confusion surfacing. USE WHEN context management, context strategy, too much context, too little context, context window, context budget, brain dump, session context, what context to load, context starvation, context flooding, agent context, prompt engineering context.",
+        "lines": 119,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/Council",
+        "name": "Council",
+        "description": "Multi-agent debate with visible transcripts where agents respond to each other. USE WHEN council, debate, perspectives, weigh options, deliberate, multiple viewpoints. Unlike RedTeam (adversarial), Council is collaborative-adversarial.",
+        "lines": 107,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/FirstPrinciples",
+        "name": "FirstPrinciples",
+        "description": "Decompose to axioms, challenge inherited assumptions, reconstruct from verified truths. USE WHEN first principles, fundamental, root cause, decompose, challenge assumptions, rebuild from scratch.",
+        "lines": 214,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/IterativeDepth",
+        "name": "IterativeDepth",
+        "description": "2-8 scientific lens passes to surface hidden requirements single-pass analysis misses. USE WHEN iterative depth, deep exploration, multi-angle analysis, multiple perspectives, examine from angles, surface hidden requirements.",
+        "lines": 40,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/PlanSynthesis",
+        "name": "PlanSynthesis",
+        "description": "Synthesize multi-agent outputs into a single templated execution spec. Consumes any combination of Thinking sub-skill and Research outputs. USE WHEN synthesize plan, plan synthesis, merge findings, execution spec, combine analysis, synthesize outputs, make a plan from.",
+        "lines": 35,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/RedTeam",
+        "name": "RedTeam",
+        "description": "32 adversarial agents to destroy weak arguments and find fatal flaws \u2014 parallel analysis and adversarial validation. USE WHEN red team, attack idea, counterarguments, critique, stress test, poke holes, devil's advocate, find weaknesses, break this, parallel analysis, adversarial validation.",
+        "lines": 104,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/Science",
+        "name": "Science",
+        "description": "Hypothesis-test-analyze cycles for systematic problem-solving \u2014 the meta-skill governing all others. Includes define goal, generate hypotheses, design experiment, measure results, analyze results, iterate, full cycle, quick diagnosis, and structured investigation. USE WHEN think about, figure out, try approaches, experiment with, iterate on, improve, optimize, define goal, generate hypotheses, design experiment, measure results, analyze results, full cycle, quick diagnosis, structured investigation, science, hypothesis.",
+        "lines": 168,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking",
+        "name": "Thinking",
+        "description": "Multi-mode analytical and creative thinking \u2014 first principles, iterative depth, brainstorming, council debates, red teaming, world threat modeling, scientific hypothesis testing, plan synthesis, and context engineering. USE WHEN first principles, decompose, brainstorm, council, debate, red team, critique, threat model, hypothesis, experiment, synthesize plan, context management, context strategy.",
+        "lines": 28,
+        "category": "Thinking"
+      },
+      {
+        "path": "Thinking/WorldThreatModelHarness",
+        "name": "WorldThreatModelHarness",
+        "description": "Stress-test ideas, strategies, and investments across 11 time horizons (6mo-50yr). Update and view world models. USE WHEN threat model, world model, test idea, test strategy, future analysis, test investment, test against future, stress test idea, time horizon analysis, update models, view models, refresh models, model status.",
+        "lines": 81,
+        "category": "Thinking"
+      }
+    ],
+    "Troubleshooting": [
+      {
+        "path": "Troubleshooting/Debugging",
+        "name": "Debugging",
+        "description": "Systematic debugging and error recovery \u2014 6-step triage, Stop-the-Line Rule, non-reproducible bug playbook, competing hypotheses. USE WHEN debugging, fix bug, error recovery, troubleshooting, reproduce bug, find root cause, stack trace, error message, test failing, build broken, not working, investigate bug, diagnose issue, flaky test.",
+        "lines": 104,
+        "category": "Troubleshooting"
+      },
+      {
+        "path": "Troubleshooting/Incident",
+        "name": "Incident",
+        "description": "Incident management from detection through postmortem. USE WHEN incident, outage, SEV1, SEV2, production down, postmortem, blameless review, incident response, war room, incident update, status page, root cause analysis, 5 whys, incident timeline, on-call.",
+        "lines": 69,
+        "category": "Troubleshooting"
+      },
+      {
+        "path": "Troubleshooting",
+        "name": "Troubleshooting",
+        "description": "Debugging and incident management \u2014 6-step triage, Stop-the-Line, competing hypotheses for dev-time bugs plus incident detection, response, and blameless postmortems for production issues. USE WHEN debugging, fix bug, error recovery, troubleshooting, reproduce bug, root cause, stack trace, test failing, build broken, incident, outage, SEV1, SEV2, postmortem, blameless review, incident response, 5 whys.",
+        "lines": 38,
+        "category": "Troubleshooting"
+      }
+    ],
+    "Utilities": [
+      {
+        "path": "Utilities/AudioEditor",
+        "name": "AudioEditor",
+        "description": "AI-powered audio/video editing \u2014 transcription, intelligent cut detection, automated editing with crossfades, and optional cloud polish. USE WHEN clean audio, edit audio, remove filler words, clean podcast, remove ums, fix audio, cut dead air, polish audio, clean recording, transcribe and edit.",
+        "lines": 108,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Browser",
+        "name": "Browser",
+        "description": "Visual verification and browser automation via Playwright. Headless or headed Chrome. USE WHEN browser, screenshot, debug web, verify UI, troubleshoot frontend, automate browser, browse website, review stories, run stories, recipe, web automation.",
+        "lines": 420,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Cloudflare",
+        "name": "Cloudflare",
+        "description": "Deploy and manage Cloudflare Workers, Pages, and services via Code Mode MCP (API queries) + wrangler (deploys). OAuth auth for wrangler (tokens lack Pages perms). USE WHEN Cloudflare, worker, deploy, Pages, MCP server, wrangler, DNS, KV, R2, D1, Vectorize.",
+        "lines": 170,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/CodexBridge",
+        "name": "CodexBridge",
+        "description": "Invoke Codex CLI from Claude in a controlled way for plan review, repo audit, codegen, and strict JSON contracts. USE WHEN ask codex, consult codex, codex review, codex json output, run codex, codex plan review, codex audit.",
+        "lines": 128,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/CompoundEngineering",
+        "name": "CompoundEngineering",
+        "description": "Bridge to compound-engineering plugin \u2014 discovery, multi-platform sync, and plugin conversion. USE WHEN compound engineering, compound skills, compound agents, list compound, multi-platform sync, sync to opencode, sync to codex, sync to gemini, sync to copilot, sync to kiro, sync to windsurf, sync to openclaw, sync to qwen, sync all tools, install compound, convert plugin, compound review, compound research, compound design, compound workflow, ce:plan, ce:review, ce:brainstorm, ce:work, ce:ideate, refresh compound, compound methodology.",
+        "lines": 263,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/CreateCLI",
+        "name": "CreateCLI",
+        "description": "Generate production-ready TypeScript CLIs with 3-tier template system (simple argv, yargs, oclif), type safety, error handling, and documentation. USE WHEN create CLI, build CLI, command-line tool, wrap API, add command, upgrade tier, TypeScript CLI.",
+        "lines": 352,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/CreateSkill",
+        "name": "CreateSkill",
+        "description": "Scaffold new PAI skills with proper YAML front matter, TitleCase naming, flat folder structure (SKILL.md + Workflows/ + Tools/), and validation against SkillSystem.md. USE WHEN create skill, new skill, skill structure, canonicalize, validate skill, update skill, fix skill structure, scaffold skill.",
+        "lines": 266,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Delegation",
+        "name": "Delegation",
+        "description": "Parallelize work via background/foreground agents, built-in types, custom agents, or agent teams/swarms. USE WHEN 3+ independent workstreams, parallel execution, agent specialization, Extended+ effort, agent team, swarm, create an agent team.",
+        "lines": 219,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Documents",
+        "name": "Documents",
+        "description": "Read, write, convert, and analyze documents \u2014 routes to PDF, DOCX, XLSX, PPTX sub-skills for creation, editing, extraction, and format conversion. USE WHEN document, process file, create document, convert format, extract text, PDF, DOCX, XLSX, PPTX, Word, Excel, spreadsheet, PowerPoint, presentation, slides, consulting report, large PDF, merge PDF, fill form, tracked changes, redlining.",
+        "lines": 346,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Documents/Docx",
+        "name": "Docx",
+        "description": "Create, edit, and analyze Word documents \u2014 tracked changes, tables, images, complex formatting, and format conversion. USE WHEN docx, Word document, create document, tracked changes, redlining.",
+        "lines": 260,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Evals",
+        "name": "Evals",
+        "description": "Objective eval metrics via code/model/human graders with pass@k/pass^k scoring. USE WHEN eval, evaluate, test agent, benchmark, verify behavior, regression test, capability test, run eval, compare models, compare prompts, create judge, create use case, view results, failure to task, suite manager, transcript capture, trial runner, skillgrade, skill eval, skill test, docker eval, external eval.",
+        "lines": 242,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/FullOutput",
+        "name": "FullOutput",
+        "description": "Overrides default LLM truncation behavior. Enforces complete code generation, bans placeholder patterns, and handles token-limit splits cleanly. USE WHEN full output, no truncation, complete code, no placeholders, exhaustive output, unabridged, full file, no shortcuts, complete implementation.",
+        "lines": 49,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Knowledge",
+        "name": "Knowledge",
+        "description": "Persistent knowledge base \u2014 save, search, and retrieve curated content across sessions. CLI-first via `kn`. USE WHEN save this, remember this content, save to knowledge, store this, search knowledge, what do I know about, recall, find in knowledge, kn, knowledge base, save digest, save wisdom, save research, what was that insight about, look up prior.",
+        "lines": 179,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/MetaExplorer",
+        "name": "MetaExplorer",
+        "description": "PAI-wide meta knowledge system \u2014 fast capture, federated search, TELOS alignment, weekly digest, reminders. CLI-first via `mx`. USE WHEN mx, capture idea, dump URL, what's my status, check alignment, does this align with goals, what happened this week, weekly digest, remind me, set reminder, ideas inbox, check goals, telos, mission check, what should I work on, am I on track, side-task check, open ideas.",
+        "lines": 166,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/PAIUpgrade",
+        "name": "PAIUpgrade",
+        "description": "Extract system improvements from content AND monitor external sources (Anthropic ecosystem, YouTube). USE WHEN upgrade, improve system, system upgrade, analyze for improvements, check Anthropic, Anthropic changes, new Claude features, check YouTube, new videos, algorithm upgrade, mine reflections, find sources, research upgrade, PAI upgrade.",
+        "lines": 493,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Parser",
+        "name": "Parser",
+        "description": "Extract structured JSON from URLs, files, videos, PDFs with entity extraction and batch support. USE WHEN parse, extract, URL, transcript, entities, JSON, batch, content, YouTube, PDF, article, newsletter, Twitter, browser extension, collision detection, detect content type, extract article, extract newsletter, extract YouTube, extract PDF, parse content.",
+        "lines": 125,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Documents/Pdf",
+        "name": "Pdf",
+        "description": "Create, merge, split, extract text/tables from PDFs, fill forms, add watermarks, and convert to/from other formats. USE WHEN pdf, PDF file, merge PDF, extract tables, fill form, split PDF.",
+        "lines": 440,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Documents/Pptx",
+        "name": "Pptx",
+        "description": "Create, edit, and analyze PowerPoint presentations \u2014 slide layouts, speaker notes, design elements, and format conversion. USE WHEN pptx, PowerPoint, slides, presentation, create slides, speaker notes.",
+        "lines": 585,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Prompting",
+        "name": "Prompting",
+        "description": "Meta-prompting system that generates optimized prompts using templates, standards, and patterns. Produces structured prompts with role, context, and output format. USE WHEN meta-prompting, template generation, prompt optimization, programmatic prompt composition, render template, validate template, prompt engineering.",
+        "lines": 181,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Browser/RealBrowserAttach",
+        "name": "RealBrowserAttach",
+        "description": "Attach to a real existing browser session instead of launching a separate Linux or WSL browser. Use when the user wants their current logged-in browser, real Brave on Windows from WSL, existing browser session, native messaging, CDP attach, remote debugging port, RunBrowser, Browserbase attach strategy, or Interceptor comparison.",
+        "lines": 119,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Typst",
+        "name": "Typst",
+        "description": "Professional PDF document creation via Typst \u2014 CVs, cover letters, reports, proposals, invoices, technical docs, academic papers, flyers, posters, brochures. USE WHEN create PDF, generate PDF, make PDF, CV, resume, cover letter, application letter, report PDF, proposal, invoice, technical document, academic paper, typst, format as PDF, export PDF, professional document, letter, letterhead, flyer, poster, brochure, handout, leaflet, marketing print, print design.",
+        "lines": 123,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities",
+        "name": "Utilities",
+        "description": "Developer utilities \u2014 CLI generation, skill scaffolding, agent delegation, system upgrades, evals, documents, parsing, audio editing, Codex, Cloudflare, browser automation, prompting, aphorisms, n8n workflows, beads management, full output enforcement, knowledge base, compound engineering. USE WHEN create CLI, scaffold skill, delegate, upgrade system, eval, document, parse, cloudflare, browser, n8n, beads, full output, knowledge, compound engineering.",
+        "lines": 41,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/Documents/Xlsx",
+        "name": "Xlsx",
+        "description": "Create, read, analyze Excel workbooks \u2014 formulas, financial models, data analysis, recalculation, and CSV/TSV conversion. USE WHEN xlsx, Excel, spreadsheet, formulas, financial model, data analysis.",
+        "lines": 372,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/ContextAudit",
+        "name": "context-audit",
+        "description": ">",
+        "lines": 155,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n",
+        "name": "n8n",
+        "description": "Expert n8n workflow development \u2014 expression syntax, MCP tools, workflow patterns, node configuration, validation, Code node JS/Python, n8nac code-first development, and code-mode runtime optimization. USE WHEN n8n, n8n workflow, build workflow, n8n node, n8n expression, n8n validation, n8n code node, n8n pattern, n8n MCP, automation workflow, n8n template, webhook workflow, batch processing, n8n agent, n8n javascript, n8n python, workflow architecture, n8nac, n8n-as-code, code-first, workflow.ts, n8nac push, n8nac pull, n8nac init, code-mode, sandbox, token savings, tool consolidation, sibling tools, lazy import.",
+        "lines": 42,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-code-javascript",
+        "name": "n8n-code-javascript",
+        "description": "Write JavaScript code in n8n Code nodes. Use when writing JavaScript in n8n, using $input/$json/$node syntax, making HTTP requests with $helpers, working with dates using DateTime, troubleshooting Code node errors, choosing between Code node modes, or doing any custom data transformation in n8n. Always use this skill when a workflow needs a Code node \u2014 whether for data aggregation, filtering, API calls, format conversion, batch processing logic, or any custom JavaScript. Covers SplitInBatches loop patterns, cross-iteration data, pairedItem, and real-world production patterns.",
+        "lines": 784,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-code-mode",
+        "name": "n8n-code-mode",
+        "description": "Code-mode runtime for n8n \u2014 sandboxed TypeScript execution that collapses sequential LLM tool calls into one shot. Architecture, sandbox rules, lazy imports, sibling auto-register, LLM gotchas, and benchmark data. USE WHEN code-mode, code mode, utcp, sandbox, n8n sandbox, toolCode, n8n code execution, token savings, tool consolidation, code-mode-tools, code-mode-core, MCP n8n, sibling tools, auto-register, lazy import, isolated-vm, n8n agent optimization, n8n cost reduction.",
+        "lines": 200,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-code-python",
+        "name": "n8n-code-python",
+        "description": "Write Python code in n8n Code nodes. Use when writing Python in n8n, using _input/_json/_node syntax, working with standard library, or need to understand Python limitations in n8n Code nodes. Use this skill when the user specifically requests Python for an n8n Code node. Note \u2014 JavaScript is recommended for 95% of use cases \u2014 only use Python when the user explicitly prefers it or the task requires Python-specific standard library capabilities (regex, hashlib, statistics).",
+        "lines": 774,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-expression-syntax",
+        "name": "n8n-expression-syntax",
+        "description": "Validate n8n expression syntax and fix common errors. Use when writing n8n expressions, using {{}} syntax, accessing $json/$node variables, troubleshooting expression errors, mapping data between nodes, or referencing webhook data in workflows. Use this skill whenever configuring node fields that reference data from previous nodes \u2014 expressions are how n8n passes data between nodes, and getting the syntax wrong is the most common source of workflow errors.",
+        "lines": 525,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-mcp-tools-expert",
+        "name": "n8n-mcp-tools-expert",
+        "description": "Expert guide for using n8n-mcp MCP tools effectively. Use when searching for nodes, validating configurations, accessing templates, managing workflows, managing credentials, auditing instance security, or using any n8n-mcp tool. Provides tool selection guidance, parameter formats, and common patterns. IMPORTANT \u2014 Always consult this skill before calling any n8n-mcp tool \u2014 it prevents common mistakes like wrong nodeType formats, incorrect parameter structures, and inefficient tool usage. If the user mentions n8n, workflows, nodes, or automation and you have n8n MCP tools available, use this skill first.",
+        "lines": 877,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-n8nac",
+        "name": "n8n-n8nac",
+        "description": "Code-first n8n workflow development with n8nac (n8n-as-code). Workspace bootstrap, GitOps sync protocol, TypeScript decorator syntax, error classification, research protocol, and common mistakes. USE WHEN n8nac, n8n-as-code, code-first workflow, workflow.ts, n8nac init, n8nac push, n8nac pull, n8nac verify, n8nac test, n8nac list, workflow as code, TypeScript workflow, decorator workflow, GitOps n8n, push workflow, pull workflow, verify workflow, test workflow, Class A error, Class B error, n8nac bootstrap, n8nac setup, workflow sync.",
+        "lines": 278,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-node-configuration",
+        "name": "n8n-node-configuration",
+        "description": "Operation-aware node configuration guidance. Use when configuring nodes, understanding property dependencies, determining required fields, choosing between get_node detail levels, or learning common configuration patterns by node type. Always use this skill when setting up node parameters \u2014 it explains which fields are required for each operation, how displayOptions control field visibility, and when to use patchNodeField for surgical edits vs full node updates.",
+        "lines": 835,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-validation-expert",
+        "name": "n8n-validation-expert",
+        "description": "Interpret validation errors and guide fixing them. Use when encountering validation errors, validation warnings, false positives, operator structure issues, or need help understanding validation results. Also use when asking about validation profiles, error types, the validation loop process, or auto-fix capabilities. Consult this skill whenever a validate_node or validate_workflow call returns errors or warnings \u2014 it knows which warnings are false positives and which errors need real fixes.",
+        "lines": 761,
+        "category": "Utilities"
+      },
+      {
+        "path": "Utilities/n8n/n8n-workflow-patterns",
+        "name": "n8n-workflow-patterns",
+        "description": "Proven workflow architectural patterns from real n8n workflows. Use when building new workflows, designing workflow structure, choosing workflow patterns, planning workflow architecture, or asking about webhook processing, HTTP API integration, database operations, AI agent workflows, batch processing, or scheduled tasks. Always consult this skill when the user asks to create, build, or design an n8n workflow, automate a process, or connect services \u2014 even if they don't explicitly mention 'patterns'. Covers webhook, API, database, AI, batch processing, and scheduled automation architectures.",
+        "lines": 512,
+        "category": "Utilities"
+      }
+    ],
+    "VisualExplainer": [
+      {
+        "path": "VisualExplainer",
+        "name": "VisualExplainer",
+        "description": "Generate self-contained HTML pages for diagrams, diff reviews, slide decks, data tables, and visual plans. USE WHEN generate diagram, visual explanation, diff review, code review visualization, generate slides, slide deck, visual plan, project recap visualization, fact check report, web diagram, architecture diagram, flowchart HTML, data table visualization, visual documentation, render as HTML instead of ASCII, or share diagram. Replaces ASCII tables and text diagrams with interactive browser-rendered HTML.",
+        "lines": 123,
+        "category": "VisualExplainer"
+      }
+    ],
+    "graphify": [
+      {
+        "path": "graphify",
+        "name": "graphify",
+        "description": "any input (code, docs, papers, images) - knowledge graph - clustered communities - HTML + JSON + audit report",
+        "lines": 1329,
+        "category": "graphify"
+      }
+    ]
+  }
+}

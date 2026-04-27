@@ -1,0 +1,59 @@
+# Task: Simplify in Verify
+# /simplify must run in VERIFY phase for code-producing Algorithm work
+
+id: task_simplify_in_verify
+description: "Agent runs /simplify during VERIFY phase for code work"
+type: regression
+domain: coding
+source: manual
+
+prompt: |
+  Use the Algorithm for this task.
+
+  Add input validation to the calculator functions in ${TMPDIR}/eval-workspace/src/calculator.ts.
+  Each function should throw a TypeError if non-number arguments are passed.
+
+setup:
+  working_dir: ${TMPDIR}/eval-workspace
+  prepare: |
+    mkdir -p ${TMPDIR}/eval-workspace/src
+    cat > ${TMPDIR}/eval-workspace/src/calculator.ts << 'EOF'
+    export function add(a: number, b: number): number { return a + b; }
+    export function subtract(a: number, b: number): number { return a - b; }
+    export function multiply(a: number, b: number): number { return a * b; }
+    export function divide(a: number, b: number): number {
+      if (b === 0) throw new Error('Division by zero');
+      return a / b;
+    }
+    EOF
+
+graders:
+  - type: tool_calls
+    weight: 0.70
+    required: true
+    params:
+      required:
+        - tool: Skill
+          params:
+            skill: "simplify"
+  - type: llm_rubric
+    weight: 0.30
+    params:
+      rubric: |
+        Did /simplify run as part of the VERIFY phase (after code changes)?
+        Score 5: /simplify invoked after code was written, during VERIFY
+        Score 3: /simplify invoked but at wrong time (before code changes)
+        Score 1: /simplify never invoked
+      scale: "1-5"
+      reasoning_first: true
+
+trials: 3
+pass_threshold: 0.60
+max_turns: 15
+max_budget_usd: 1.50
+
+tags:
+  - algorithm-rules
+  - simplify
+  - verify-phase
+created_at: "2026-04-13"

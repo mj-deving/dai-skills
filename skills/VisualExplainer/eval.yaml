@@ -1,0 +1,108 @@
+version: "1"
+
+defaults:
+  agent: gemini
+  provider: docker
+  trials: 5
+  timeout: 300
+  threshold: 0.8
+  docker:
+    base: node:20-slim
+
+tasks:
+  - name: generate-architecture-diagram
+    instruction: |
+      Generate a visual architecture diagram for a web application with a React frontend, a Node.js API, and a PostgreSQL database. Include the flow of a user login request.
+      Save the HTML file as architecture_diagram.html.
+    graders:
+      - type: deterministic
+        run: |
+          passed=0
+          total=3
+          c1_pass=false
+          c1_msg="File architecture_diagram.html not found"
+          c2_pass=false
+          c2_msg="Mermaid.js library not found in HTML"
+          c3_pass=false
+          c3_msg="Required architecture components (React, Node, PostgreSQL) not found"
+
+          if [ -f "architecture_diagram.html" ]; then
+            passed=$((passed + 1))
+            c1_pass=true
+            c1_msg="File architecture_diagram.html exists"
+            
+            if grep -qi "mermaid" architecture_diagram.html; then
+              passed=$((passed + 1))
+              c2_pass=true
+              c2_msg="Mermaid.js library found"
+            fi
+
+            if grep -qi "React" architecture_diagram.html && grep -qi "Node" architecture_diagram.html && grep -qi "PostgreSQL" architecture_diagram.html; then
+              passed=$((passed + 1))
+              c3_pass=true
+              c3_msg="Architecture components found"
+            fi
+          fi
+
+          score=$(awk "BEGIN {printf \"%.2f\", $passed/$total}")
+          echo "{\"score\":$score,\"details\":\"$passed/$total checks passed\",\"checks\":[{\"name\":\"file_exists\",\"passed\":$c1_pass,\"message\":\"$c1_msg\"},{\"name\":\"uses_mermaid\",\"passed\":$c2_pass,\"message\":\"$c2_msg\"},{\"name\":\"contains_content\",\"passed\":$c3_pass,\"message\":\"$c3_msg\"}]}"
+        weight: 0.7
+      - type: llm_rubric
+        rubric: |
+          The agent should use the VisualExplainer skill to generate a professional architecture diagram.
+          - The output must be a self-contained HTML file.
+          - It should use Mermaid.js for the diagram rendering as specified in the skill.
+          - It should clearly visualize the components (React, Node, PostgreSQL) and the login flow.
+          - The UI should be interactive (zoom/pan) or at least well-styled (not just a static image).
+        weight: 0.3
+
+  - name: generate-slide-deck
+    instruction: |
+      Create a 3-slide presentation about the benefits of TypeScript. 
+      Slide 1: Title "Why TypeScript?".
+      Slide 2: "Type Safety" explaining how it catches errors early.
+      Slide 3: "Better Tooling" explaining autocomplete and refactoring.
+      Save the presentation as typescript_slides.html.
+    graders:
+      - type: deterministic
+        run: |
+          passed=0
+          total=3
+          c1_pass=false
+          c1_msg="File typescript_slides.html not found"
+          c2_pass=false
+          c2_msg="HTML does not appear to have a slide-like structure (missing multiple sections or slide keywords)"
+          c3_pass=false
+          c3_msg="Required content (Type Safety, Tooling) not found"
+
+          if [ -f "typescript_slides.html" ]; then
+            passed=$((passed + 1))
+            c1_pass=true
+            c1_msg="File typescript_slides.html exists"
+
+            # Check for slide structure: either multiple <section> tags or keywords like 'slide'
+            section_count=$(grep -ci "<section" typescript_slides.html || echo 0)
+            if [ "$section_count" -ge 2 ] || grep -qi "slide" typescript_slides.html; then
+              passed=$((passed + 1))
+              c2_pass=true
+              c2_msg="Slide structure detected"
+            fi
+
+            if grep -qi "Type Safety" typescript_slides.html && grep -qi "Tooling" typescript_slides.html; then
+              passed=$((passed + 1))
+              c3_pass=true
+              c3_msg="Required content found"
+            fi
+          fi
+
+          score=$(awk "BEGIN {printf \"%.2f\", $passed/$total}")
+          echo "{\"score\":$score,\"details\":\"$passed/$total checks passed\",\"checks\":[{\"name\":\"file_exists\",\"passed\":$c1_pass,\"message\":\"$c1_msg\"},{\"name\":\"is_slide_deck\",\"passed\":$c2_pass,\"message\":\"$c2_msg\"},{\"name\":\"contains_content\",\"passed\":$c3_pass,\"message\":\"$c3_msg\"}]}"
+        weight: 0.7
+      - type: llm_rubric
+        rubric: |
+          The agent should use the VisualExplainer skill (specifically the GenerateSlides workflow).
+          - The output must be a self-contained HTML slide deck.
+          - It should have at least 3 slides with the specified content.
+          - It should include navigation features (e.g., keyboard arrows or on-screen buttons) as mentioned in the skill definition.
+          - The styling should be professional and avoid "AI slop" (no neon dashboards or forbidden patterns).
+        weight: 0.3

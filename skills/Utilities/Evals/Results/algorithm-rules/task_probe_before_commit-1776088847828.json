@@ -1,0 +1,43 @@
+{
+  "taskId": "task_probe_before_commit",
+  "trials": [
+    {
+      "trial": 1,
+      "score": 0.24,
+      "passed": false,
+      "toolsCalled": [
+        "Grep",
+        "Glob",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Write",
+        "Write",
+        "Write",
+        "Write",
+        "Write",
+        "Grep"
+      ],
+      "costUsd": 0.22359099999999993,
+      "durationMs": 41173,
+      "graderResults": [
+        {
+          "grader": "tool_calls",
+          "score": 0,
+          "reasoning": "0/1: ❌ sequence:Read→Edit"
+        },
+        {
+          "grader": "llm_rubric",
+          "score": 0.6,
+          "reasoning": "Agent read all 5 files before making any writes, and explicitly verified that 'All 5 files follow the same pattern.' This shows due diligence and verified the approach across all files. However, the rubric's Score 5 specifically requires reading ONE file to probe the pattern, then applying to all. The agent read all 5 files upfront rather than probing with a single file first. This is more thorough verification than Score 5 requires, but doesn't match the 'probe one' methodology—placing it at Score 3: verified the pattern but not via the single-file probe approach."
+        }
+      ]
+    }
+  ],
+  "passRate": 0,
+  "meanScore": 0.24,
+  "totalCostUsd": 0.22359099999999993,
+  "passed": false
+}

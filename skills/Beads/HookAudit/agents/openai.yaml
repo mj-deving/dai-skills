@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Hook Audit"
+  short_description: "Audit and repair Claude Beads hook behavior"
+  default_prompt: "Use $beads-hook-audit to audit the local Claude Beads hook stack and align SessionStart, PreCompact, and wrapup hooks with Beads doctrine."

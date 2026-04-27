@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Formula Builder"
+  short_description: "Turn repeat workflows into Beads formulas and templates"
+  default_prompt: "Use $beads-formula-builder to turn this recurring process into a Beads workflow with explicit tasks, dependencies, gates, and validation."

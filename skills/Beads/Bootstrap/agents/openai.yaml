@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Bootstrap"
+  short_description: "Audit or initialize repo Beads workflow and files"
+  default_prompt: "Use $beads-bootstrap to audit this repo for Beads usage and initialize or align CLAUDE.md, AGENTS.md, and Beads workflow only where needed."

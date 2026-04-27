@@ -1,0 +1,107 @@
+version: "1"
+
+defaults:
+  agent: gemini
+  provider: docker
+  trials: 3
+  timeout: 300
+  threshold: 0.8
+  docker:
+    base: node:20-slim
+
+tasks:
+  - name: trivy-vulnerability-scan
+    instruction: |
+      Scan the project in the current directory for CRITICAL vulnerabilities using Trivy. 
+      Save the full JSON output of the scan as trivy_report.json.
+    workspace:
+      - src: |
+          {
+            "name": "vulnerable-app",
+            "version": "1.0.0",
+            "dependencies": {
+              "shelljs": "0.8.4"
+            }
+          }
+        dest: package.json
+    graders:
+      - type: deterministic
+        run: |
+          passed=0
+          total=3
+          
+          c1_pass=false; c1_msg="File trivy_report.json was not created"
+          c2_pass=false; c2_msg="trivy_report.json is not valid JSON"
+          c3_pass=false; c3_msg="No CRITICAL vulnerabilities found in report"
+
+          if [ -f "trivy_report.json" ]; then
+            passed=$((passed + 1))
+            c1_pass=true; c1_msg="File trivy_report.json exists"
+            
+            if node -e "JSON.parse(require('fs').readFileSync('trivy_report.json'))" > /dev/null 2>&1; then
+              passed=$((passed + 1))
+              c2_pass=true; c2_msg="trivy_report.json is valid JSON"
+              
+              # Check if the report contains CRITICAL severity findings
+              if grep -q "CRITICAL" trivy_report.json; then
+                passed=$((passed + 1))
+                c3_pass=true; c3_msg="Found CRITICAL vulnerabilities in report"
+              fi
+            fi
+          fi
+
+          score=$(awk "BEGIN {printf \"%.2f\", $passed/$total}")
+          echo "{\"score\":$score,\"details\":\"$passed/$total checks passed\",\"checks\":[{\"name\":\"exists\",\"passed\":$c1_pass,\"message\":\"$c1_msg\"},{\"name\":\"valid_json\",\"passed\":$c2_pass,\"message\":\"$c2_msg\"},{\"name\":\"findings\",\"passed\":$c3_pass,\"message\":\"$c3_msg\"}]}"
+        weight: 0.7
+      - type: llm_rubric
+        rubric: |
+          The agent should correctly use the `trivy fs` command with the `--format json` flag.
+          The agent should identify that shelljs 0.8.4 has critical vulnerabilities.
+          The output file should be a comprehensive JSON report.
+        weight: 0.3
+
+  - name: sops-secrets-encryption
+    instruction: |
+      Encrypt the 'prod.env' file using 'sops' and the age public key 'age1ql3z7hjy74pw3hy7gu6xd3u6cl377cc7f7rsgeu024v30p6v2uuq967p3d'. 
+      Save the resulting encrypted file as prod.env.enc.
+    workspace:
+      - src: |
+          DB_PASSWORD=<example-db-password>
+          API_KEY=<example-api-key>
+        dest: prod.env
+    graders:
+      - type: deterministic
+        run: |
+          passed=0
+          total=3
+          
+          c1_pass=false; c1_msg="File prod.env.enc was not created"
+          c2_pass=false; c2_msg="File is not encrypted (secrets still visible)"
+          c3_pass=false; c3_msg="Sops metadata not found in file"
+
+          if [ -f "prod.env.enc" ]; then
+            passed=$((passed + 1))
+            c1_pass=true; c1_msg="File prod.env.enc exists"
+            
+            # Check that the raw secret is no longer visible
+            if ! grep -q "super-secret-password-123" prod.env.enc; then
+              passed=$((passed + 1))
+              c2_pass=true; c2_msg="Secrets are successfully masked/encrypted"
+            fi
+
+            # Check for sops metadata
+            if grep -q "sops" prod.env.enc && grep -q "age" prod.env.enc; then
+              passed=$((passed + 1))
+              c3_pass=true; c3_msg="Sops/Age metadata present"
+            fi
+          fi
+
+          score=$(awk "BEGIN {printf \"%.2f\", $passed/$total}")
+          echo "{\"score\":$score,\"details\":\"$passed/$total checks passed\",\"checks\":[{\"name\":\"exists\",\"passed\":$c1_pass,\"message\":\"$c1_msg\"},{\"name\":\"encrypted\",\"passed\":$c2_pass,\"message\":\"$c2_msg\"},{\"name\":\"metadata\",\"passed\":$c3_pass,\"message\":\"$c3_msg\"}]}"
+        weight: 0.7
+      - type: llm_rubric
+        rubric: |
+          The agent should use the `sops --encrypt --age ...` command correctly.
+          The agent should not leave the unencrypted file in a way that compromises security (though the task only asks for the encrypted output).
+          The agent should correctly apply the provided age public key.
+        weight: 0.3

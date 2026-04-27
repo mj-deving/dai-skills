@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads Version Audit"
+  short_description: "Audit live Beads backend, remotes, hooks, and drift"
+  default_prompt: "Use $beads-version-audit to inspect this repo's current Beads posture and report backend, remotes, hooks, drift, and the smallest safe remediation."

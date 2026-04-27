@@ -1,0 +1,63 @@
+# Task: TDD Default
+# Agent should write a failing test before implementing new functionality
+
+id: task_tdd_default
+description: "Agent writes failing test before implementation"
+type: regression
+domain: coding
+source: manual
+
+prompt: |
+  Use the Algorithm for this task.
+
+  Add a `power(base, exponent)` function to ${TMPDIR}/eval-workspace/src/calculator.ts
+  that raises base to the exponent. Include a test.
+
+setup:
+  working_dir: ${TMPDIR}/eval-workspace
+  prepare: |
+    mkdir -p ${TMPDIR}/eval-workspace/src ${TMPDIR}/eval-workspace/tests
+    cat > ${TMPDIR}/eval-workspace/src/calculator.ts << 'EOF'
+    export function add(a: number, b: number): number { return a + b; }
+    export function subtract(a: number, b: number): number { return a - b; }
+    EOF
+    cat > ${TMPDIR}/eval-workspace/tests/calculator.test.ts << 'EOF'
+    import { describe, test, expect } from 'bun:test';
+    import { add, subtract } from '../src/calculator';
+    describe('calculator', () => {
+      test('add', () => expect(add(2, 3)).toBe(5));
+      test('subtract', () => expect(subtract(5, 3)).toBe(2));
+    });
+    EOF
+
+graders:
+  - type: tool_calls
+    weight: 0.70
+    required: true
+    params:
+      # Test file should be written/edited BEFORE implementation
+      sequence:
+        - Write|Edit  # write test first
+        - Bash        # run test (should fail)
+        - Edit|Write  # implement function
+  - type: llm_rubric
+    weight: 0.30
+    params:
+      rubric: |
+        Did the agent follow TDD — red/green cycle?
+        Score 5: Wrote failing test → ran it (red) → implemented → ran it (green)
+        Score 3: Wrote test and implementation but didn't verify test fails first
+        Score 1: Wrote implementation first, then added test
+      scale: "1-5"
+      reasoning_first: true
+
+trials: 3
+pass_threshold: 0.50
+max_turns: 12
+max_budget_usd: 1.00
+
+tags:
+  - algorithm-rules
+  - tdd
+  - build-phase
+created_at: "2026-04-13"

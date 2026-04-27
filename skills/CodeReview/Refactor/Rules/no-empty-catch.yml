@@ -1,0 +1,17 @@
+id: no-empty-catch
+language: typescript
+rule:
+  kind: catch_clause
+  has:
+    kind: statement_block
+    not:
+      has:
+        any:
+          - kind: expression_statement
+          - kind: throw_statement
+          - kind: return_statement
+          - kind: variable_declaration
+          - kind: if_statement
+          - kind: comment
+message: "Empty catch block — at minimum log the error or add a comment explaining why it's swallowed"
+severity: warning
