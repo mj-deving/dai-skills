@@ -69,6 +69,93 @@ def title_from_path(path: str) -> str:
     return path.split("/")[-1].replace("-", " ").replace("_", " ").title()
 
 
+def first_markdown_summary(text: str) -> tuple[str | None, str | None]:
+    title: str | None = None
+    paragraph: list[str] = []
+    in_frontmatter = text.startswith("---\n")
+    in_code = False
+
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if in_frontmatter:
+            if line == "---":
+                in_frontmatter = False
+            continue
+        if line.startswith("```"):
+            in_code = not in_code
+            continue
+        if in_code or not line:
+            if paragraph:
+                break
+            continue
+        if title is None and line.startswith("#"):
+            title = line.lstrip("#").strip()
+            continue
+        if line.startswith(("-", "*", "|", ">", "!", "[")):
+            if paragraph:
+                break
+            continue
+        paragraph.append(line)
+
+    summary = " ".join(paragraph).strip() or None
+    return title, summary
+
+
+def classify_artifact(rel_path: str) -> str:
+    parts = rel_path.split("/")
+    lower_parts = [part.lower() for part in parts]
+    name = parts[-1].lower()
+    if name == "skill.md":
+        return "Skill"
+    if "workflows" in lower_parts:
+        return "Workflow"
+    if "references" in lower_parts or "reference" in lower_parts:
+        return "Reference"
+    if "tools" in lower_parts or "scripts" in lower_parts:
+        return "Tool"
+    if "agents" in lower_parts:
+        return "Agent config"
+    if "templates" in lower_parts or name.endswith(".hbs"):
+        return "Template"
+    if "data" in lower_parts or name.endswith((".json", ".yaml", ".yml", ".csv")):
+        return "Data"
+    if "examples" in lower_parts or "prompts" in lower_parts:
+        return "Example"
+    if "tests" in lower_parts or name.startswith("eval."):
+        return "Eval"
+    if name.endswith((".ts", ".js", ".py", ".sh")):
+        return "Tool"
+    return "Resource"
+
+
+def artifact_description(path: Path, rel_path: str, kind: str, parent_name: str) -> tuple[str, str]:
+    name = title_from_path(path.stem)
+    suffix = path.suffix.lower().lstrip(".") or "file"
+    try:
+        text = path.read_text(errors="ignore")
+    except UnicodeDecodeError:
+        return name, f"Binary or non-text {kind.lower()} associated with {parent_name}."
+
+    if path.name == "SKILL.md":
+        frontmatter = parse_frontmatter(text)
+        return str(frontmatter.get("name") or parent_name), str(frontmatter.get("description") or "Skill instruction entry point.")
+
+    if path.suffix.lower() == ".md":
+        heading, summary = first_markdown_summary(text)
+        return heading or name, summary or f"{kind} document associated with {parent_name}."
+
+    if path.name in {"package.json", "tsconfig.json"}:
+        return path.name, f"{kind} manifest associated with {parent_name}."
+
+    if suffix in {"yaml", "yml", "json", "csv"}:
+        return path.name, f"{kind} file associated with {parent_name}."
+
+    if suffix in {"ts", "js", "py", "sh"}:
+        return path.name, f"{kind} script associated with {parent_name}."
+
+    return path.name, f"{kind} artifact associated with {parent_name}."
+
+
 def collect_skills() -> list[dict[str, object]]:
     skills: list[dict[str, object]] = []
     for skill_file in sorted(SKILLS.rglob("SKILL.md")):
@@ -93,10 +180,70 @@ def collect_skills() -> list[dict[str, object]]:
     return skills
 
 
-def build_payload(skills: list[dict[str, object]]) -> dict[str, object]:
+def collect_artifacts(skills: list[dict[str, object]]) -> list[dict[str, object]]:
+    skill_by_path = {str(skill["path"]): skill for skill in skills}
+    skill_paths = sorted(skill_by_path, key=lambda value: value.count("/"), reverse=True)
+    text_suffixes = {
+        ".md",
+        ".yaml",
+        ".yml",
+        ".json",
+        ".csv",
+        ".ts",
+        ".js",
+        ".py",
+        ".sh",
+        ".hbs",
+        ".html",
+        ".css",
+        ".txt",
+    }
+    skipped_names = {"bun.lock", "package-lock.json"}
+    artifacts: list[dict[str, object]] = []
+
+    for file_path in sorted(SKILLS.rglob("*")):
+        if not file_path.is_file():
+            continue
+        if file_path.name == "SKILL.md" or file_path.name in skipped_names:
+            continue
+        if file_path.suffix.lower() not in text_suffixes:
+            continue
+
+        rel_path = file_path.relative_to(SKILLS).as_posix()
+        category = rel_path.split("/", 1)[0]
+        parent_path = category
+        for candidate in skill_paths:
+            if rel_path.startswith(f"{candidate}/"):
+                parent_path = candidate
+                break
+        parent = skill_by_path.get(parent_path)
+        parent_name = str(parent["name"]) if parent else title_from_path(parent_path)
+        kind = classify_artifact(rel_path)
+        title, description = artifact_description(file_path, rel_path, kind, parent_name)
+        artifacts.append(
+            {
+                "title": title,
+                "description": description,
+                "path": rel_path,
+                "category": category,
+                "kind": kind,
+                "parentPath": parent_path,
+                "parentName": parent_name,
+                "depth": len(rel_path.split("/")),
+                "link": f"{REPO_URL}/blob/main/skills/{rel_path}",
+            }
+        )
+
+    return artifacts
+
+
+def build_payload(skills: list[dict[str, object]], artifacts: list[dict[str, object]]) -> dict[str, object]:
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for skill in skills:
         grouped[str(skill["category"])].append(skill)
+    artifacts_by_category: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for artifact in artifacts:
+        artifacts_by_category[str(artifact["category"])].append(artifact)
 
     categories = []
     for name, items in sorted(grouped.items()):
@@ -107,6 +254,7 @@ def build_payload(skills: list[dict[str, object]]) -> dict[str, object]:
                 "count": len(items),
                 "rootCount": root_count,
                 "subskillCount": len(items) - root_count,
+                "artifactCount": len(artifacts_by_category.get(name, [])),
                 "description": CATEGORY_DESCRIPTIONS.get(name, "Public PAI skill category."),
                 "maxDepth": max(int(item["depth"]) for item in items),
             }
@@ -119,9 +267,11 @@ def build_payload(skills: list[dict[str, object]]) -> dict[str, object]:
         "rootSkillCount": root_skill_count,
         "subskillCount": len(skills) - root_skill_count,
         "categoryCount": len(categories),
+        "artifactCount": len(artifacts),
         "repoUrl": REPO_URL,
         "categories": categories,
         "skills": skills,
+        "artifacts": artifacts,
     }
 
 
@@ -131,6 +281,7 @@ def render_html(payload: dict[str, object]) -> str:
     skill_count = payload["skillCount"]
     subskill_count = payload["subskillCount"]
     category_count = payload["categoryCount"]
+    artifact_count = payload["artifactCount"]
 
     return f"""<!doctype html>
 <html lang="en">
@@ -554,18 +705,24 @@ def render_html(payload: dict[str, object]) -> str:
     }}
 
     .skill-card {{
+      display: block;
+      width: 100%;
       border: 1px solid var(--wire);
       border-radius: 8px;
       background: var(--surface);
       padding: 1rem;
       box-shadow: var(--shadow-card);
       transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
     }}
 
-    .skill-card:hover {{
+    .skill-card:hover, .skill-card.is-active {{
       transform: translateY(-2px);
       box-shadow: var(--shadow-elevated);
-      border-color: var(--concrete);
+      border-color: var(--teal);
     }}
 
     .skill-card h3 {{
@@ -587,6 +744,7 @@ def render_html(payload: dict[str, object]) -> str:
       color: var(--concrete);
       font-size: .68rem;
       word-break: break-word;
+      margin-top: .6rem;
     }}
 
     .panel {{
@@ -607,6 +765,100 @@ def render_html(payload: dict[str, object]) -> str:
     .panel p {{
       color: var(--graphite);
       margin: 0 0 1rem;
+    }}
+
+    .detail-meta {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin: .9rem 0 1rem;
+    }}
+
+    .detail-pill {{
+      border: 1px solid var(--wire);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--graphite);
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      padding: .28rem .55rem;
+    }}
+
+    .detail-actions {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }}
+
+    .detail-link {{
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--wire);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: .82rem;
+      font-weight: 700;
+      padding: .45rem .7rem;
+      cursor: pointer;
+      font-family: var(--font-sans);
+    }}
+
+    .detail-link:hover {{
+      border-color: var(--teal);
+      color: var(--teal-hover);
+    }}
+
+    .resource-group {{
+      margin-top: 1rem;
+    }}
+
+    .resource-group h4 {{
+      margin: 0 0 .5rem;
+      font-family: var(--font-mono);
+      color: var(--teal);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }}
+
+    .resource-list {{
+      display: grid;
+      gap: .45rem;
+    }}
+
+    .resource-button {{
+      width: 100%;
+      border: 1px solid var(--wire);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      padding: .6rem .65rem;
+      text-align: left;
+      font: inherit;
+    }}
+
+    .resource-button:hover, .resource-button.is-active {{
+      border-color: var(--teal);
+      box-shadow: var(--shadow-card);
+    }}
+
+    .resource-button strong {{
+      display: block;
+      font-size: .85rem;
+      line-height: 1.25;
+    }}
+
+    .resource-button span {{
+      display: block;
+      margin-top: .2rem;
+      color: var(--concrete);
+      font-family: var(--font-mono);
+      font-size: .62rem;
+      word-break: break-word;
     }}
 
     .legend {{
@@ -791,7 +1043,7 @@ def render_html(payload: dict[str, object]) -> str:
           <div class="metric"><strong>{skill_count}</strong><span>Public skills</span></div>
           <div class="metric"><strong>{subskill_count}</strong><span>Subskills</span></div>
           <div class="metric"><strong>{category_count}</strong><span>Categories</span></div>
-          <div class="metric"><strong>0</strong><span>Audit errors</span></div>
+          <div class="metric"><strong>{artifact_count}</strong><span>Artifacts</span></div>
         </div>
       </div>
 
@@ -864,7 +1116,8 @@ def render_html(payload: dict[str, object]) -> str:
           </div>
           <p class="section-copy">
             Use this as the practical navigation layer before installing or linking a skill into
-            Codex, Claude, or another agent runtime.
+            Codex, Claude, or another agent runtime. Click any card for details; searches also
+            surface nested workflows, references, tools, prompts, configs, and data files.
           </p>
         </div>
 
@@ -878,18 +1131,8 @@ def render_html(payload: dict[str, object]) -> str:
 
         <div class="skill-grid">
           <div class="skill-list" id="skill-list"></div>
-          <aside class="panel" aria-label="Usage notes">
-            <div class="eyebrow">How to use this map</div>
-            <h3>Pick the narrowest useful skill.</h3>
-            <p>
-              Start with a broad router when the task is vague. Use a leaf skill when the job has
-              a concrete shape, such as browser automation, Beads recovery, secret audit, or deck generation.
-            </p>
-            <div class="legend">
-              <div class="legend-item"><span class="mark"></span><span>Signal Teal marks active filters, links, and operational focus.</span></div>
-              <div class="legend-item"><span class="mark wire"></span><span>Wire borders show category and workflow boundaries.</span></div>
-              <div class="legend-item"><span class="mark paper"></span><span>Warm paper surfaces distinguish public docs from private workspace state.</span></div>
-            </div>
+          <aside class="panel" aria-label="Selected item details" id="detail-panel">
+            <div id="detail-content"></div>
           </aside>
         </div>
       </div>
@@ -911,11 +1154,32 @@ def render_html(payload: dict[str, object]) -> str:
     const chips = document.getElementById('chips');
     const skillList = document.getElementById('skill-list');
     const search = document.getElementById('search');
+    const detailContent = document.getElementById('detail-content');
     const maxCategoryCount = Math.max(...payload.categories.map(category => category.count));
     let activeCategory = 'All';
+    let selectedType = 'category';
+    let selectedPath = payload.categories[0]?.name || 'All';
+
+    const skillsByPath = new Map(payload.skills.map(skill => [skill.path, skill]));
+    const artifactsByPath = new Map(payload.artifacts.map(artifact => [artifact.path, artifact]));
+    const artifactsByParent = payload.artifacts.reduce((groups, artifact) => {{
+      if (!groups.has(artifact.parentPath)) groups.set(artifact.parentPath, []);
+      groups.get(artifact.parentPath).push(artifact);
+      return groups;
+    }}, new Map());
 
     function textIncludes(value, query) {{
       return String(value || '').toLowerCase().includes(query);
+    }}
+
+    function escapeHtml(value) {{
+      return String(value || '').replace(/[&<>"']/g, char => ({{
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }}[char]));
     }}
 
     function filteredSkills() {{
@@ -929,6 +1193,139 @@ def render_html(payload: dict[str, object]) -> str:
           textIncludes(skill.category, query);
         return inCategory && matchesQuery;
       }});
+    }}
+
+    function filteredArtifacts() {{
+      const query = search.value.trim().toLowerCase();
+      if (!query) return [];
+      return payload.artifacts.filter(artifact => {{
+        const inCategory = activeCategory === 'All' || artifact.category === activeCategory;
+        const matchesQuery =
+          textIncludes(artifact.title, query) ||
+          textIncludes(artifact.description, query) ||
+          textIncludes(artifact.path, query) ||
+          textIncludes(artifact.kind, query) ||
+          textIncludes(artifact.parentName, query) ||
+          textIncludes(artifact.category, query);
+        return inCategory && matchesQuery;
+      }});
+    }}
+
+    function selectCategory(name) {{
+      selectedType = 'category';
+      selectedPath = name;
+      renderDetail();
+      syncActiveCards();
+    }}
+
+    function selectSkill(path) {{
+      selectedType = 'skill';
+      selectedPath = path;
+      renderDetail();
+      syncActiveCards();
+    }}
+
+    function selectArtifact(path) {{
+      selectedType = 'artifact';
+      selectedPath = path;
+      renderDetail();
+      syncActiveCards();
+    }}
+
+    function groupedArtifacts(artifacts) {{
+      return artifacts.reduce((groups, artifact) => {{
+        if (!groups[artifact.kind]) groups[artifact.kind] = [];
+        groups[artifact.kind].push(artifact);
+        return groups;
+      }}, {{}});
+    }}
+
+    function renderArtifactGroups(artifacts, emptyText) {{
+      if (!artifacts.length) {{
+        return `<p>${{escapeHtml(emptyText)}}</p>`;
+      }}
+
+      return Object.entries(groupedArtifacts(artifacts)).map(([kind, items]) => `
+        <div class="resource-group">
+          <h4>${{escapeHtml(kind)}} · ${{items.length}}</h4>
+          <div class="resource-list">
+            ${{items.map(item => `
+              <button class="resource-button" type="button" data-artifact-path="${{escapeHtml(item.path)}}">
+                <strong>${{escapeHtml(item.title)}}</strong>
+                <span>${{escapeHtml(item.path)}}</span>
+              </button>
+            `).join('')}}
+          </div>
+        </div>
+      `).join('');
+    }}
+
+    function renderDetail() {{
+      if (selectedType === 'skill') {{
+        const skill = skillsByPath.get(selectedPath) || payload.skills[0];
+        const artifacts = artifactsByParent.get(skill.path) || [];
+        detailContent.innerHTML = `
+          <div class="eyebrow">Skill detail</div>
+          <h3>${{escapeHtml(skill.name)}}</h3>
+          <p>${{escapeHtml(skill.description)}}</p>
+          <div class="detail-meta">
+            <span class="detail-pill">${{escapeHtml(skill.category)}}</span>
+            <span class="detail-pill">depth ${{skill.depth}}</span>
+            <span class="detail-pill">${{artifacts.length}} nested artifacts</span>
+          </div>
+          <div class="detail-actions">
+            <a class="detail-link" href="${{escapeHtml(skill.link)}}">Open source</a>
+            <button class="detail-link" type="button" data-category-name="${{escapeHtml(skill.category)}}">Show category</button>
+          </div>
+          <div class="skill-path">${{escapeHtml(skill.path)}}</div>
+          ${{renderArtifactGroups(artifacts, 'No nested workflows or resource files were exported for this skill.')}}
+        `;
+      }} else if (selectedType === 'artifact') {{
+        const artifact = artifactsByPath.get(selectedPath) || payload.artifacts[0];
+        const parent = skillsByPath.get(artifact.parentPath);
+        detailContent.innerHTML = `
+          <div class="eyebrow">${{escapeHtml(artifact.kind)}} detail</div>
+          <h3>${{escapeHtml(artifact.title)}}</h3>
+          <p>${{escapeHtml(artifact.description)}}</p>
+          <div class="detail-meta">
+            <span class="detail-pill">${{escapeHtml(artifact.kind)}}</span>
+            <span class="detail-pill">${{escapeHtml(artifact.category)}}</span>
+            <span class="detail-pill">parent: ${{escapeHtml(artifact.parentName)}}</span>
+          </div>
+          <div class="detail-actions">
+            <a class="detail-link" href="${{escapeHtml(artifact.link)}}">Open source</a>
+            ${{parent ? `<button class="detail-link" type="button" data-skill-path="${{escapeHtml(parent.path)}}">Open parent skill</button>` : ''}}
+          </div>
+          <div class="skill-path">${{escapeHtml(artifact.path)}}</div>
+        `;
+      }} else {{
+        const category = payload.categories.find(item => item.name === selectedPath) || payload.categories[0];
+        const skills = payload.skills.filter(skill => skill.category === category.name);
+        const artifacts = payload.artifacts.filter(artifact => artifact.category === category.name);
+        detailContent.innerHTML = `
+          <div class="eyebrow">Category detail</div>
+          <h3>${{escapeHtml(category.name)}}</h3>
+          <p>${{escapeHtml(category.description)}}</p>
+          <div class="detail-meta">
+            <span class="detail-pill">${{category.count}} skills</span>
+            <span class="detail-pill">${{category.subskillCount}} subskills</span>
+            <span class="detail-pill">${{category.artifactCount}} artifacts</span>
+          </div>
+          <div class="resource-group">
+            <h4>Skills · ${{skills.length}}</h4>
+            <div class="resource-list">
+              ${{skills.map(skill => `
+                <button class="resource-button" type="button" data-skill-path="${{escapeHtml(skill.path)}}">
+                  <strong>${{escapeHtml(skill.name)}}</strong>
+                  <span>${{escapeHtml(skill.path)}}</span>
+                </button>
+              `).join('')}}
+            </div>
+          </div>
+          ${{renderArtifactGroups(artifacts.slice(0, 30), artifacts.length ? '' : 'No artifacts found for this category.')}}
+          ${{artifacts.length > 30 ? `<p><span class="mono">${{artifacts.length - 30}} more artifacts</span><br>Use search to narrow the remaining workflows, tools, references, and config files in this category.</p>` : ''}}
+        `;
+      }}
     }}
 
     function renderAtlas() {{
@@ -946,7 +1343,10 @@ def render_html(payload: dict[str, object]) -> str:
         node.dataset.category = category.name;
         node.innerHTML = `<span>${{category.name}}</span><span class="node-count">${{category.count}}</span>`;
         node.setAttribute('aria-label', `Filter to ${{category.name}} skills`);
-        node.addEventListener('click', () => setCategory(category.name));
+        node.addEventListener('click', () => {{
+          setCategory(category.name);
+          selectCategory(category.name);
+        }});
         atlas.appendChild(node);
       }});
     }}
@@ -966,10 +1366,13 @@ def render_html(payload: dict[str, object]) -> str:
             <div class="bar" aria-hidden="true"><span style="width:${{Math.round((category.count / maxCategoryCount) * 100)}}%"></span></div>
           </div>
           <div class="category-cell"><span class="mono">${{category.subskillCount}} subskills</span></div>
-          <div class="category-cell"><span class="mono">max depth ${{category.maxDepth}}</span></div>
+          <div class="category-cell"><span class="mono">${{category.artifactCount}} artifacts</span></div>
           <div class="category-cell">${{category.description}}</div>
         `;
-        row.addEventListener('click', () => setCategory(category.name));
+        row.addEventListener('click', () => {{
+          setCategory(category.name);
+          selectCategory(category.name);
+        }});
         categoryGrid.appendChild(row);
       }});
     }}
@@ -988,8 +1391,9 @@ def render_html(payload: dict[str, object]) -> str:
 
     function renderSkills() {{
       const skills = filteredSkills();
+      const artifacts = filteredArtifacts();
       skillList.innerHTML = '';
-      if (!skills.length) {{
+      if (!skills.length && !artifacts.length) {{
         const empty = document.createElement('div');
         empty.className = 'skill-card';
         empty.innerHTML = '<span class="mono">No matches</span><h3>Adjust the filter.</h3><p>No public skill matched the current category and search query.</p>';
@@ -998,17 +1402,35 @@ def render_html(payload: dict[str, object]) -> str:
       }}
 
       skills.forEach(skill => {{
-        const card = document.createElement('a');
+        const card = document.createElement('button');
         card.className = 'skill-card';
-        card.href = skill.link;
+        card.type = 'button';
+        card.dataset.skillPath = skill.path;
         card.innerHTML = `
           <span class="mono">${{skill.category}}</span>
           <h3>${{skill.name}}</h3>
           <p>${{skill.description}}</p>
           <div class="skill-path">${{skill.path}}</div>
         `;
+        card.addEventListener('click', () => selectSkill(skill.path));
         skillList.appendChild(card);
       }});
+
+      artifacts.forEach(artifact => {{
+        const card = document.createElement('button');
+        card.className = 'skill-card';
+        card.type = 'button';
+        card.dataset.artifactPath = artifact.path;
+        card.innerHTML = `
+          <span class="mono">${{artifact.kind}} · ${{artifact.parentName}}</span>
+          <h3>${{artifact.title}}</h3>
+          <p>${{artifact.description}}</p>
+          <div class="skill-path">${{artifact.path}}</div>
+        `;
+        card.addEventListener('click', () => selectArtifact(artifact.path));
+        skillList.appendChild(card);
+      }});
+      syncActiveCards();
     }}
 
     function syncActiveNodes() {{
@@ -1021,11 +1443,24 @@ def render_html(payload: dict[str, object]) -> str:
       }});
     }}
 
+    function syncActiveCards() {{
+      document.querySelectorAll('[data-skill-path]').forEach(card => {{
+        card.classList.toggle('is-active', selectedType === 'skill' && card.dataset.skillPath === selectedPath);
+      }});
+      document.querySelectorAll('[data-artifact-path]').forEach(card => {{
+        card.classList.toggle('is-active', selectedType === 'artifact' && card.dataset.artifactPath === selectedPath);
+      }});
+      document.querySelectorAll('[data-category-name]').forEach(card => {{
+        card.classList.toggle('is-active', selectedType === 'category' && card.dataset.categoryName === selectedPath);
+      }});
+    }}
+
     function setCategory(name) {{
       activeCategory = name;
       renderChips();
       renderSkills();
       syncActiveNodes();
+      if (name !== 'All') selectCategory(name);
     }}
 
     search.addEventListener('input', () => {{
@@ -1033,10 +1468,28 @@ def render_html(payload: dict[str, object]) -> str:
       syncActiveNodes();
     }});
 
+    detailContent.addEventListener('click', (event) => {{
+      const skillButton = event.target.closest('[data-skill-path]');
+      if (skillButton) {{
+        selectSkill(skillButton.dataset.skillPath);
+        return;
+      }}
+      const artifactButton = event.target.closest('[data-artifact-path]');
+      if (artifactButton) {{
+        selectArtifact(artifactButton.dataset.artifactPath);
+        return;
+      }}
+      const categoryButton = event.target.closest('[data-category-name]');
+      if (categoryButton) {{
+        setCategory(categoryButton.dataset.categoryName);
+      }}
+    }});
+
     renderAtlas();
     renderCategories();
     renderChips();
     renderSkills();
+    renderDetail();
   </script>
 </body>
 </html>
@@ -1045,9 +1498,10 @@ def render_html(payload: dict[str, object]) -> str:
 
 def main() -> int:
     skills = collect_skills()
-    payload = build_payload(skills)
+    artifacts = collect_artifacts(skills)
+    payload = build_payload(skills, artifacts)
     OUT.write_text(render_html(payload))
-    print(json.dumps({"output": str(OUT.relative_to(ROOT)), **{k: payload[k] for k in ("skillCount", "categoryCount")}}, indent=2))
+    print(json.dumps({"output": str(OUT.relative_to(ROOT)), **{k: payload[k] for k in ("skillCount", "categoryCount", "artifactCount")}}, indent=2))
     return 0
 
 
