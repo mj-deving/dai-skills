@@ -706,7 +706,7 @@ def render_html(payload: dict[str, object]) -> str:
 
     @media (max-width: 640px) {{
       .shell {{
-        width: min(100% - 2rem, 1200px);
+        width: min(100% - 1.5rem, 1200px);
       }}
       .navlinks {{
         display: none;
@@ -714,16 +714,49 @@ def render_html(payload: dict[str, object]) -> str:
       .metrics {{
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }}
+      .studio-card {{
+        padding: .75rem;
+        border-radius: 8px;
+        overflow: visible;
+      }}
       .atlas-frame {{
-        min-height: 520px;
+        min-height: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: .55rem;
+        padding: .25rem;
+      }}
+      .atlas-frame::after {{
+        display: none;
       }}
       .node {{
-        font-size: .6rem;
-        width: 124px;
+        position: relative;
+        left: auto !important;
+        top: auto !important;
+        width: 100%;
+        min-height: 44px;
+        transform: none;
+        font-size: .72rem;
+        padding: .7rem .85rem;
+        white-space: normal;
+      }}
+      .node::before {{
+        display: none;
       }}
       .node.is-center {{
-        width: 108px;
-        min-height: 108px;
+        width: 132px;
+        min-height: 132px;
+        justify-self: center;
+        margin: .25rem 0 .7rem;
+        line-height: 1.25;
+      }}
+      .node:hover, .node.is-active {{
+        transform: translateY(-1px);
+      }}
+      .node-count {{
+        flex: 0 0 auto;
+        min-width: 2ch;
+        text-align: right;
       }}
     }}
   </style>
