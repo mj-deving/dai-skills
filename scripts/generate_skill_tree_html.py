@@ -100,18 +100,24 @@ def build_payload(skills: list[dict[str, object]]) -> dict[str, object]:
 
     categories = []
     for name, items in sorted(grouped.items()):
+        root_count = sum(1 for item in items if int(item["depth"]) == 1)
         categories.append(
             {
                 "name": name,
                 "count": len(items),
+                "rootCount": root_count,
+                "subskillCount": len(items) - root_count,
                 "description": CATEGORY_DESCRIPTIONS.get(name, "Public PAI skill category."),
                 "maxDepth": max(int(item["depth"]) for item in items),
             }
         )
 
+    root_skill_count = sum(1 for skill in skills if int(skill["depth"]) == 1)
     return {
         "generatedFrom": "skills/**/SKILL.md",
         "skillCount": len(skills),
+        "rootSkillCount": root_skill_count,
+        "subskillCount": len(skills) - root_skill_count,
         "categoryCount": len(categories),
         "repoUrl": REPO_URL,
         "categories": categories,
@@ -123,6 +129,7 @@ def render_html(payload: dict[str, object]) -> str:
     data = json.dumps(payload, ensure_ascii=False)
     escaped_data = html.escape(data, quote=False)
     skill_count = payload["skillCount"]
+    subskill_count = payload["subskillCount"]
     category_count = payload["categoryCount"]
 
     return f"""<!doctype html>
@@ -284,7 +291,7 @@ def render_html(payload: dict[str, object]) -> str:
 
     .metrics {{
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1px;
       margin-top: 2rem;
       border: 1px solid var(--wire);
@@ -489,7 +496,7 @@ def render_html(payload: dict[str, object]) -> str:
 
     .category-grid {{
       display: grid;
-      grid-template-columns: 1.2fr .8fr 1fr;
+      grid-template-columns: 1.2fr .72fr .72fr 1fr;
       gap: 1px;
       background: var(--wire);
       border: 1px solid var(--wire);
@@ -637,8 +644,49 @@ def render_html(payload: dict[str, object]) -> str:
 
     .hidden {{ display: none !important; }}
 
+    .system-grid {{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--wire);
+      background: var(--wire);
+    }}
+
+    .system-card {{
+      background: var(--surface);
+      padding: 1.25rem;
+    }}
+
+    .system-card strong {{
+      display: block;
+      margin: .5rem 0;
+      font-size: 1.05rem;
+      letter-spacing: -.015em;
+    }}
+
+    .system-card p {{
+      margin: 0;
+      color: var(--graphite);
+      font-size: .92rem;
+    }}
+
+    .note-grid {{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }}
+
+    .note {{
+      border: 1px solid var(--wire);
+      border-radius: 8px;
+      background: var(--wash);
+      padding: 1rem;
+      color: var(--graphite);
+    }}
+
     @media (max-width: 900px) {{
-      .hero, .section-head, .controls, .skill-grid {{
+      .hero, .section-head, .controls, .skill-grid, .system-grid, .note-grid {{
         grid-template-columns: 1fr;
       }}
       .hero {{
@@ -685,6 +733,7 @@ def render_html(payload: dict[str, object]) -> str:
     <nav class="shell nav" aria-label="Primary navigation">
       <a class="brand" href="{REPO_URL}">PAI Skills</a>
       <div class="navlinks">
+        <a href="#system">System</a>
         <a href="#categories">Categories</a>
         <a href="#skills">Skill Index</a>
         <a href="{REPO_URL}/blob/main/docs/catalog.md">Catalog</a>
@@ -707,6 +756,7 @@ def render_html(payload: dict[str, object]) -> str:
         </div>
         <div class="metrics" aria-label="Skill tree metrics">
           <div class="metric"><strong>{skill_count}</strong><span>Public skills</span></div>
+          <div class="metric"><strong>{subskill_count}</strong><span>Subskills</span></div>
           <div class="metric"><strong>{category_count}</strong><span>Categories</span></div>
           <div class="metric"><strong>0</strong><span>Audit errors</span></div>
         </div>
@@ -719,6 +769,43 @@ def render_html(payload: dict[str, object]) -> str:
       </aside>
     </section>
 
+    <section class="section" id="system">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Progressive disclosure</div>
+            <h2>Agents route by metadata, then load only what the task needs.</h2>
+          </div>
+          <p class="section-copy">
+            This atlas embeds all public skill metadata for human browsing. Agent runtimes should not
+            eagerly load every skill body. They use the standard skill pattern: metadata for routing,
+            activated instructions for execution, and resource files only when needed.
+          </p>
+        </div>
+        <div class="system-grid" aria-label="Skill loading model">
+          <div class="system-card">
+            <span class="mono">Layer 01</span>
+            <strong>Name + description</strong>
+            <p>Small frontmatter metadata is available for routing. The description carries the trigger contract.</p>
+          </div>
+          <div class="system-card">
+            <span class="mono">Layer 02</span>
+            <strong>Activated SKILL.md</strong>
+            <p>The full body loads only after the user request matches a relevant skill description.</p>
+          </div>
+          <div class="system-card">
+            <span class="mono">Layer 03</span>
+            <strong>Bundled resources</strong>
+            <p>Scripts, references, workflows, and assets are read or executed on demand, not preloaded.</p>
+          </div>
+        </div>
+        <div class="note-grid">
+          <div class="note"><span class="mono">Subskill coverage</span><br>Every folder with its own `SKILL.md` is represented below, including nested skills such as Beads audits, Frontend/Impeccable commands, n8n specialists, document tools, and browser attach workflows.</div>
+          <div class="note"><span class="mono">Convention status</span><br>Required frontmatter, public links, local-path hygiene, and secret-pattern gates pass. Large-skill warnings remain visible as candidates for future progressive splitting.</div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="categories">
       <div class="shell">
         <div class="section-head">
@@ -727,8 +814,8 @@ def render_html(payload: dict[str, object]) -> str:
             <h2>Broad routers first, concrete workflows below.</h2>
           </div>
           <p class="section-copy">
-            The tree is intentionally uneven. Large operational domains like Utilities, Media,
-            Frontend, and Beads branch into many leaf skills; focused domains stay small and direct.
+            The tree is intentionally uneven. Root skills act as routers. Subskills are concrete
+            operating guides with their own descriptions, paths, and activation triggers.
           </p>
         </div>
         <div class="category-grid" id="category-grid" aria-label="Category table"></div>
@@ -845,6 +932,7 @@ def render_html(payload: dict[str, object]) -> str:
             </div>
             <div class="bar" aria-hidden="true"><span style="width:${{Math.round((category.count / maxCategoryCount) * 100)}}%"></span></div>
           </div>
+          <div class="category-cell"><span class="mono">${{category.subskillCount}} subskills</span></div>
           <div class="category-cell"><span class="mono">max depth ${{category.maxDepth}}</span></div>
           <div class="category-cell">${{category.description}}</div>
         `;

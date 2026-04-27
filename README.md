@@ -8,6 +8,7 @@ This repository is staged for public GitHub release. Automated audit hard gates 
 
 - `skills/` — exported skill folders from the local PAI skill workspace
 - `docs/skill-tree.html` — interactive MJ-branded skill tree visualization
+- `docs/skill-system.md` — practical explanation of progressive disclosure, root skills, and subskills
 - `docs/catalog.md` — generated catalog grouped by practical use case
 - `docs/install-codex.md` — Codex symlink/install guidance
 - `docs/install-claude.md` — Claude symlink/install guidance
@@ -17,6 +18,8 @@ This repository is staged for public GitHub release. Automated audit hard gates 
 ## Visual Skill Map
 
 Open the [interactive skill tree](https://mj-deving.github.io/pai-skills/skill-tree.html) for an overview of the public skill tree. It is generated from `skills/**/SKILL.md`, uses the MJ brand system, and can also be opened locally from `docs/skill-tree.html`.
+
+The map includes root skills and subskills with descriptions. See `docs/skill-system.md` for how progressive disclosure works: agents route from `name` + `description`, load `SKILL.md` only after activation, and read bundled resources only when needed.
 
 ## Practical Use
 
