@@ -7,11 +7,16 @@ This repository is staged for public GitHub release. Automated audit hard gates 
 ## What This Contains
 
 - `skills/` — exported skill folders from the local PAI skill workspace
+- `docs/skill-tree.html` — interactive MJ-branded skill tree visualization
 - `docs/catalog.md` — generated catalog grouped by practical use case
 - `docs/install-codex.md` — Codex symlink/install guidance
 - `docs/install-claude.md` — Claude symlink/install guidance
 - `docs/publication-checklist.md` — pre-publication safety and quality checklist
 - `scripts/audit_skills.py` — metadata/link/path audit helper
+
+## Visual Skill Map
+
+Open `docs/skill-tree.html` for an interactive overview of the public skill tree. It is generated from `skills/**/SKILL.md`, uses the MJ brand system, and is designed to be served directly from GitHub Pages or opened from a local clone.
 
 ## Practical Use
 
