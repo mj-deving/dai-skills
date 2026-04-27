@@ -51,7 +51,7 @@ The automated audit currently reports:
 - `0` local path references
 - `0` secret-pattern hits
 
-There are still large-skill warnings in the audit report. Those are not publication blockers, but they are useful candidates for later progressive-disclosure cleanup.
+There are still large-skill warnings in the audit report. Those are not publication blockers. Concrete split recommendations are tracked in [`progressive-disclosure-candidates.md`](progressive-disclosure-candidates.md).
 
 ## Practical Agent Use
 
