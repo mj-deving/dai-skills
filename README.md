@@ -16,7 +16,7 @@ This repository is staged for public GitHub release. Automated audit hard gates 
 
 ## Visual Skill Map
 
-Open `docs/skill-tree.html` for an interactive overview of the public skill tree. It is generated from `skills/**/SKILL.md`, uses the MJ brand system, and is designed to be served directly from GitHub Pages or opened from a local clone.
+Open the [interactive skill tree](https://mj-deving.github.io/pai-skills/skill-tree.html) for an overview of the public skill tree. It is generated from `skills/**/SKILL.md`, uses the MJ brand system, and can also be opened locally from `docs/skill-tree.html`.
 
 ## Practical Use
 
