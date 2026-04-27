@@ -48,11 +48,6 @@
       "path": "Utilities/n8n/n8n-workflow-patterns/SKILL.md",
       "kind": "large_skill",
       "lines": 512
-    },
-    {
-      "path": "graphify/SKILL.md",
-      "kind": "large_skill",
-      "lines": 1329
     }
   ],
   "missing_relative_links": [],
@@ -1021,7 +1016,7 @@
         "path": "graphify",
         "name": "graphify",
         "description": "any input (code, docs, papers, images) - knowledge graph - clustered communities - HTML + JSON + audit report",
-        "lines": 1329,
+        "lines": 72,
         "category": "graphify"
       }
     ]

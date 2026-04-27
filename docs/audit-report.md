@@ -7,7 +7,7 @@ Generated for the local public-ready scaffold at `${REPO_DIR}`.
 - Skills copied: `132`
 - Categories: `21`
 - Metadata errors: `0`
-- Large-skill warnings: `10`
+- Large-skill warnings: `9`
 - Missing relative links: `0`
 - Local path references: `0`
 - Secret-pattern hits: `0`
@@ -27,4 +27,3 @@ Publication audit passes hard gates. Review warnings and third-party provenance 
 - `Utilities/n8n/n8n-node-configuration/SKILL.md` — 835 lines
 - `Utilities/n8n/n8n-validation-expert/SKILL.md` — 761 lines
 - `Utilities/n8n/n8n-workflow-patterns/SKILL.md` — 512 lines
-- `graphify/SKILL.md` — 1329 lines

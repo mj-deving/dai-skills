@@ -14,7 +14,6 @@ The goal is not to remove useful detail. The goal is to keep each activation pat
 
 | Skill | Lines | Suggested split | Rationale |
 |---|---:|---|---|
-| `graphify/SKILL.md` | 1329 | Keep a 40-80 line router. Move input modes, graph schema, clustering notes, HTML output rules, and audit/report formats into separate direct references such as `InputModes.md`, `GraphSchema.md`, `HtmlOutput.md`, and `AuditReport.md`. | This is the largest skill. It likely contains multiple operating modes that do not all need to load for every graph task. |
 | `Utilities/n8n/n8n-mcp-tools-expert/SKILL.md` | 877 | Keep tool-selection rules in `SKILL.md`. Move MCP tool catalog, parameter formats, template operations, credential operations, and workflow-management examples into direct references. | n8n MCP work is broad. Most requests need one tool family, not the entire catalog. |
 | `Utilities/n8n/n8n-node-configuration/SKILL.md` | 835 | Keep the node-configuration decision tree in `SKILL.md`. Move operation-specific field rules, display-option behavior, node examples, and patch-vs-full-update guidance into references. | Node configuration is highly conditional. Loading all operation examples up front is expensive. |
 | `Utilities/n8n/n8n-code-javascript/SKILL.md` | 784 | Keep Code node mode selection and critical syntax rules in `SKILL.md`. Move item access, HTTP helper patterns, date handling, paired-item behavior, batching, and error recipes into references. | JavaScript Code node tasks vary widely; most require one or two pattern files. |
@@ -27,10 +26,15 @@ The goal is not to remove useful detail. The goal is to keep each activation pat
 
 ## Suggested Priority
 
-1. `graphify/SKILL.md` — largest single activation cost.
-2. n8n specialist skills — several related large files can share one consistent split pattern.
-3. `Security/Recon/SKILL.md` — split safety gates from technique catalogs.
-4. `Utilities/Documents/Pptx/SKILL.md` — split by document operation mode.
+1. n8n specialist skills — several related large files can share one consistent split pattern.
+2. `Security/Recon/SKILL.md` — split safety gates from technique catalogs.
+3. `Utilities/Documents/Pptx/SKILL.md` — split by document operation mode.
+
+## Completed Refactors
+
+| Skill | Before | After | Notes |
+|---|---:|---:|---|
+| `graphify/SKILL.md` | 1329 lines | 72 lines | Converted into a router with direct root-level references for setup/detection, extraction, graph outputs, incremental operations, query operations, automation operations, and honesty rules. |
 
 ## Acceptance Criteria
 

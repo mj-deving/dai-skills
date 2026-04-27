@@ -932,7 +932,7 @@
       "category": "graphify",
       "name": "graphify",
       "description": "any input (code, docs, papers, images) - knowledge graph - clustered communities - HTML + JSON + audit report",
-      "lines": 1329
+      "lines": 72
     }
   ],
   "excluded": [
